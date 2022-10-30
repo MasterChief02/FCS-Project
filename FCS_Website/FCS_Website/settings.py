@@ -55,7 +55,7 @@ ROOT_URLCONF = 'FCS_Website.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ["/mnt/ntfs/IIITD/3rd Year/FCS/Project/"],
+        'DIRS': [""],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

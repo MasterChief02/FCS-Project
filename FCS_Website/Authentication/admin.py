@@ -17,10 +17,12 @@ class OrganizationAdmin (admin.ModelAdmin):
 
 
 
+
 admin.site.register (patient, PatientAdmin)
 admin.site.register (organization, OrganizationAdmin)
 admin.site.register (user, UserAdmin)
-
-
+admin.site.register (insurance_firm,OrganizationAdmin)
+admin.site.register (doctor,OrganizationAdmin)
+admin.site.register (hospital,OrganizationAdmin)
 admin.site.unregister(User)
 admin.site.unregister(Group)

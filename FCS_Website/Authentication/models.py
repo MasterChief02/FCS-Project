@@ -1,30 +1,57 @@
 from django.db import models
 
-
+# Create your models here.
 
 class user (models.Model):
   username = models.CharField (max_length=50)
   password = models.CharField (max_length=1024)
+  name = models.CharField (max_length=50)
   email = models.EmailField (max_length=50)
+  mobile_number=models.PositiveBigIntegerField(default=00)
   is_verified = models.BooleanField (default=False)
-
-
-
-class patient (user):
-  # name = models.CharField (max_length=50)
-  aadhar = models.CharField (max_length=20)
-  mobile_number = models.CharField (max_length=10)
-  dob = models.DateField ()
-  # id_proof = models.FileField (upload_to=None, max_length=254)
-
-
-
+  #date_added=models.DateTimeField(auto_now_add=True,null=True)
 
 class organization (user):
-  name = models.CharField (max_length=100)
+  
   description = models.CharField (max_length=500)
   image_1 = models.ImageField (upload_to=None, height_field=None, width_field=None, max_length=254)
   image_2 = models.ImageField (upload_to=None, height_field=None, width_field=None, max_length=254)
   image_3 = models.ImageField (upload_to=None, height_field=None, width_field=None, max_length=254, blank=True)
   image_4 = models.ImageField (upload_to=None, height_field=None, width_field=None, max_length=254, blank=True)
   image_5 = models.ImageField (upload_to=None, height_field=None, width_field=None, max_length=254, blank=True)
+ 
+class Document(models.Model):
+    name=models.CharField(max_length=30)
+    email=models.EmailField()
+    document=models.FileField(upload_to='doc',blank=True)
+    
+class insurance_firm(organization):
+    Type="Insurance Firm"
+    def __str__(self):
+        return "Insurance Firm: "+self.name
+
+class doctor(organization):
+    Type="Doctor"
+    def __str__(self):
+        return "Doctor: "+self.name
+    
+class pharmacy(organization):   
+    Type="Pharmacy"
+    def __str__(self):
+        return "Pharmacy: "+self.name
+    
+class hospital(organization):
+    Type="Hospital"
+    def __str__(self):
+        return "Hospital: "+self.name
+    
+class patient (user):
+  Type="Patient"
+  mydoctor=models.ForeignKey(doctor,null=True,on_delete=models.SET_NULL)
+  myinsurance_firm=models.ForeignKey(insurance_firm,null=True,on_delete=models.SET_NULL)
+  myhospital=models.ForeignKey(hospital,null=True,on_delete=models.SET_NULL)
+  aadhar = models.CharField (max_length=20)
+  dob = models.DateField ()
+  #id_proof = models.FileField (upload_to=None, max_length=254)
+  def __str__(self):
+        return "Patient: "+self.name
