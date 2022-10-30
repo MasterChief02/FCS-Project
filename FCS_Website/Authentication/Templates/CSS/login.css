@@ -7,7 +7,7 @@
     top: 0;
     left:0;
     overflow-x: hidden;
-    background-color: #d1a5a5;
+    background-color: #eace8e;
     align-items: center;
     justify-content: center;
     place-items: center;
@@ -78,12 +78,12 @@
 }
 
 .footer button{
-    height: 50%;
-    width:15%;
+    height: 5vh;
+    width:8vw;
     margin: 5px;
     font-size: 2vh;
     background-color: rgb(0, 0, 0);
-    border-radius: 20px 20px 20px 20px;
+    border-radius: 200px 200px 200px 200px;
     border: 0px;
     color: white;
     display: grid;
@@ -91,6 +91,7 @@
     justify-content: center;
     place-items: center;
     place-content: center;
+    margin-bottom: 3vh;
 }
 
 .footer button:hover{  
