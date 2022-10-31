@@ -19,8 +19,8 @@
     flex-direction: column;
     align-items: center; 
     justify-content: center;
-    width: 50vw;
-    height: 80vh; 
+    width: 60vw;
+    height: 90vh; 
     background-color: #ffffff;
     border-radius: 20px;
 }
@@ -52,7 +52,8 @@
     display : flex;
     justify-content: space-between;
     align-items: center;
-    width: 30vw;
+    width: 40vw;
+    margin:3px;
 }
 
 .row input{
@@ -66,11 +67,20 @@
     display : flex;
     font-size: larger;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 600;
+}
+
+
+.row select{
+    display : flex;
+    font-size: larger;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin-right: 13vw;
 }
 
 
 .row input{
-    height: 5vh;
+    height: 4vh;
     width:18vw;
     margin: 10px;
     font-size: 2vh;
@@ -80,6 +90,25 @@
     border: 0px;
     box-shadow: 0px 0px 5px rgb(168, 168, 168);
     color: black;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+}
+
+.row .files{
+    height: 4vh;
+    width:20vw;
+    margin: 7px;
+    font-size: 2vh;
+    padding-left: 20px;
+    background-color: white;
+    border-radius: 0px 0px 0px 0px;
+    border: 0px;
+    box-shadow: 0px 0px 0px rgb(168, 168, 168);
+    color: black;
+    display: grid;
+    align-items: center;
+    justify-content: center;
 }
 
 .row .otp{
@@ -111,7 +140,7 @@
     height: 5vh;
     width:8vw;
     /* margin: 5px; */
-    margin-top: 100px;
+    margin-top: 6vh;
     font-size: 2vh;
     background-color: rgb(0, 0, 0);
     border-radius: 200px 200px 200px 200px;
