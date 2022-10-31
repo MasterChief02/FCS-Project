@@ -1,5 +1,4 @@
 """FCS_Website URL Configuration
-
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.2/topics/http/urls/
 Examples:
@@ -21,6 +20,8 @@ from Authentication.views import *
 
 urlpatterns = [
     path ('admin/', admin.site.urls),
+    path('', HomePage.as_view(), name='home'),
     path('login/', LoginPage.as_view(), name='login'),
     path('logout/', LogoutPage.as_view(), name='logout'),
+    path('register/', LoginPage.as_view(), name='register'),
 ]

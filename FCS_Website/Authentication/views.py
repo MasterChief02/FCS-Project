@@ -50,6 +50,10 @@ class LogoutPage(ListView):
             return redirect('login')
         return render(request, "Authentication/Templates/signup.html")
 
+class HomePage(ListView):
+  def get(self,request):
+        return render(request, "Authentication/Templates/Home.html")
+
 class PatientSingnup(ListView):
   def get(self,request):
   # return render(request, "FCS_Website/Authentication/Templates/login.html", {})
