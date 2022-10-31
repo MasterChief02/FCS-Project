@@ -1,4 +1,59 @@
-<form action = "" method = "POST">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="./CSS/login.css"/>
+</head>
+<body>
+    <div class="main">
+        <div class="container">
+
+            <div class="header">
+            <h1>Login</h1>
+            </div>
+
+                    <!-- <input type="text" placeholder="Email..." />
+                    <input type="text" placeholder="Password..."/> -->
+                    <form action = "" method = "POST" class="bodys">
+                     {% csrf_token %}
+                        <div class="row">
+                            <label for="username">Email: </label>
+                            <input id="username" type="text" name="username">
+                        </div>
+                        <div class="row">
+                            <label for="password">Password: </label>
+                            <input id="password" type="password" name="password">
+                        </div>
+                        <!-- <div class="row">
+                            <label for="OTP">OTP: </label>
+                            <input id="otp" type="otp" name="otp"> -->
+                        <!-- </div> -->
+                        <!-- <div class="row">
+                           <label for="type">Choose type:</label>
+                           <select id="type">
+                           <option label="Patient">Patient</option>
+                           <option label="Doctor">Doctor</option>
+                           <option label="Admin">Admin</option>
+                           <option label="Pharmacy">Pharmacy</option>
+                           <option label="Hospital">Hospital</option>
+                           <option label="Insurance">Insurance</option>
+                           </select>
+                       </div> -->
+                       <label for="type">type: </label>
+                        <input id="type" type="text" name="type">
+                        <div class="row2">
+                            <input type="submit" value="Login" class="submit">
+                        </div>
+                     </form>
+        </div>
+    </div>
+
+</body>
+</html>
+
+
+
+
+<!-- <form action = "" method = "POST">
    {% csrf_token %}
    <label for="username">Your name: </label>
    <input id="username" type="text" name="username">
@@ -8,4 +63,4 @@
    <input id="type" type="text" name="type">
    
    <input type="submit" value="OK">
-</form>
+</form> -->
