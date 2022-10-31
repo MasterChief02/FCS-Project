@@ -11,16 +11,28 @@
             <h1>Login</h1>
             </div>
 
-            <div class="bodys">
-                    <input type="text" placeholder="Email..." />
-                    <input type="text" placeholder="Password..."/>
-            </div>
-
-            <div class="footer">
-            <button>
-                <p>Login</p>
-            </button>
-            </div>
+                    <!-- <input type="text" placeholder="Email..." />
+                    <input type="text" placeholder="Password..."/> -->
+                    <form method = "POST" name="form" action="{% url 'login_view' %}" class="bodys">
+                        <div class="row">
+                            <label for="username">Email: </label>
+                            <input id="username" type="text" name="username">
+                        </div>
+                        <div class="row">
+                            <label for="password">Password: </label>
+                            <input id="password" type="password" name="password">
+                        </div>
+                        <div class="row">
+                            <label for="OTP">OTP: </label>
+                            <input id="otp" type="otp" name="otp">
+                        </div>
+                        <div class="row">
+                            <input id="resend" type="button" value="Resend OTP" onclick="resendOTP()" class="otp">
+                        </div>
+                        <div class="row2">
+                            <input type="submit" value="Login" class="submit">
+                        </div>
+                     </form>
         </div>
     </div>
 
