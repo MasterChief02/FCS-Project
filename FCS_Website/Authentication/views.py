@@ -5,6 +5,11 @@ from Authentication.models import *
 from django.views.generic.list import ListView
 from django.contrib import messages
 
+class HomePage(ListView):
+  def get(self,request):
+        return render(request, "Authentication/Templates/Home.html")
+
+
 class LoginPage(ListView):
   def get(self,request):
   # return render(request, "FCS_Website/Authentication/Templates/login.html", {})
@@ -50,19 +55,59 @@ class LogoutPage(ListView):
             return redirect('login')
         return render(request, "Authentication/Templates/signup.html")
 
-class HomePage(ListView):
+class PatientSignup(ListView):
   def get(self,request):
-        return render(request, "Authentication/Templates/Home.html")
-
-class PatientSingnup(ListView):
-  def get(self,request):
-  # return render(request, "FCS_Website/Authentication/Templates/login.html", {})
-  
-    if (request.session.get ("authenticated", False) == True):        
+  # return render(request, "FCS_Website/Authentication/Templates/login.html", {})       
       return render(request, "Authentication/Templates/PatientSignup.html")
-    else:
-      return render(request, "Authentication/Templates/login.html")
+  
   def post(self,request):
     #user typed in credentials
-    pass
+    gotusername=request.POST['username']
+    email=request.POST['email']
+    name=request.POST['name']
+    password = request.POST['password']
+    repassword = request.POST['repassword']
+    if((password.__eq__(repassword))==False):
+      messages.warning(request,'Enter same password')
+      return redirect('signup')
+  
+    Aadhar=request.POST['Aadhar']
+    mobile_number=request.POST['mobile_number']
+    identity_proof=request.POST['identity_proof']
+    dob=request.POST['dob']
+    add_patient = patient(username=gotusername, password=password,email=email,name=name,aadhar=Aadhar,mobile_number=mobile_number,dob=dob,id_proof=identity_proof)
+    add_patient.save()
+    return redirect('login')
+    
+class DoctorSignup(ListView):
+  def get(self,request):
+  # return render(request, "FCS_Website/Authentication/Templates/login.html", {})       
+      return render(request, "Authentication/Templates/DoctorSignup.html")
+  
+  def post(self,request):
+    #user typed in credentials
+    gotusername=request.POST['username']
+    User= user.objects.filter (username=gotusername).exists()
+    if(User):
+      messages.warning(request,'Username already taken')
+      return redirect('signup')
+    email=request.POST['email']
+    name=request.POST['name']
+    password = request.POST['password']
+    repassword = request.POST['repassword']
+    if((password.__eq__(repassword))==False):
+      messages.warning(request,'Enter same password')
+      return redirect('DoctorSignup')
+  
+    
+    mobile_number=request.POST['mobile_number']
+    license_number=request.POST['license']
+    User= doctor.objects.filter (license_number=license_number).exists()
+    if(User):
+      messages.warning(request,'license_number already registered')
+      return redirect('DoctorSignup')
+    add_doctor = doctor(username=gotusername, password=password,email=email,name=name,mobile_number=mobile_number,license_number=license_number)
+    add_doctor.save()
+    return redirect('login')
+
 

@@ -24,4 +24,6 @@ urlpatterns = [
     path('login/', LoginPage.as_view(), name='login'),
     path('logout/', LogoutPage.as_view(), name='logout'),
     path('register/', LoginPage.as_view(), name='register'),
+    path('PatientSignup/', PatientSignup.as_view(), name='PatientSignup'),
+    path('DoctorSignup/', DoctorSignup.as_view(), name='DoctorSignup'),
 ]

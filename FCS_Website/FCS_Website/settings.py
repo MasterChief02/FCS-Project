@@ -11,11 +11,14 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+from stat import FILE_ATTRIBUTE_DIRECTORY
+import os;
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
+TEMPLATE_DIR = os.path.join(BASE_DIR, 'Authentication','Templates')
+print(TEMPLATE_DIR)
+print(BASE_DIR)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -119,6 +122,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+# STATICFILES_DIRS = [TEMPLATE_DIR + "/static"]
+# STATICFILES_DIRS=[os.path.join(BASE_DIR,"Authentication","static")]
+# print(STATICFILES_DIRS)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
