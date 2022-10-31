@@ -20,10 +20,7 @@ class organization (user):
   image_4 = models.ImageField (upload_to=None, height_field=None, width_field=None, max_length=254, blank=True)
   image_5 = models.ImageField (upload_to=None, height_field=None, width_field=None, max_length=254, blank=True)
  
-class Document(models.Model):
-    name=models.CharField(max_length=30)
-    email=models.EmailField()
-    document=models.FileField(upload_to='doc',blank=True)
+
     
 class insurance_firm(organization):
     Type="Insurance Firm"
@@ -47,11 +44,18 @@ class hospital(organization):
     
 class patient (user):
   Type="Patient"
-  mydoctor=models.ForeignKey(doctor,null=True,on_delete=models.SET_NULL)
-  myinsurance_firm=models.ForeignKey(insurance_firm,null=True,on_delete=models.SET_NULL)
-  myhospital=models.ForeignKey(hospital,null=True,on_delete=models.SET_NULL)
+  #mydoctor=models.ForeignKey(doctor,null=True,on_delete=models.SET_NULL)
+  #myinsurance_firm=models.ForeignKey(insurance_firm,null=True,on_delete=models.SET_NULL)
+  #myhospital=models.ForeignKey(hospital,null=True,on_delete=models.SET_NULL)
   aadhar = models.CharField (max_length=20)
   dob = models.DateField ()
   #id_proof = models.FileField (upload_to=None, max_length=254)
   def __str__(self):
         return "Patient: "+self.name
+      
+class document(models.Model):
+    owner = models.ForeignKey(patient,null=True,on_delete=models.SET_NULL)
+    title=models.CharField(max_length=30)
+    doc=models.FileField(upload_to='doc',blank=True)
+    is_verified = models.BooleanField (default=False)
+

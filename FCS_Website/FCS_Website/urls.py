@@ -21,5 +21,6 @@ from Authentication.views import *
 
 urlpatterns = [
     path ('admin/', admin.site.urls),
-    path ("", login)
+    path('login/', LoginPage.as_view(), name='login'),
+    path('logout/', LogoutPage.as_view(), name='logout'),
 ]
