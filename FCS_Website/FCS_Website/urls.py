@@ -23,6 +23,7 @@ urlpatterns = [
     path('', HomePage.as_view(), name='home'),
     path('login/', LoginPage.as_view(), name='login'),
     path('logout/', LogoutPage.as_view(), name='logout'),
+<<<<<<< HEAD
     # path('register/', LoginPage.as_view(), name='register'),
     path('PatientSignup/', PatientSignup.as_view(), name='PatientSignup'),
     path('DoctorSignup/', DoctorSignup.as_view(), name='DoctorSignup'),
@@ -32,4 +33,7 @@ urlpatterns = [
     path('Payment/',PaymentPage.as_view(), name='Payment'),
     path('Dashboard/',Dashboard.as_view(), name='Dashboard'),
     path('OTP/',otp.as_view(), name='otp'),
+=======
+    path('document/add/', document_add_view.as_view ())
+>>>>>>> c8f9629 (Documents add and share added)
 ]
