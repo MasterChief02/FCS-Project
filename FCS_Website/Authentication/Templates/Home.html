@@ -1,43 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <link rel="stylesheet" type="text/css" href="../static/CSS/Home.css"/>
-    
+  <link rel="stylesheet" type="text/css" href="../static/CSS/Home.css" />
+
 </head>
+
 <body>
-    <div class='login'>
+  <div class='login'>
     <div class='login_sq'>
-        <Link to = '/user'> 
-          <button class='box' onClick="window.location.href='http://127.0.0.1:8000/login/';">
-            <img src="../static/Images/user.png" alt="Logo" width="120" height="120" />
-            <p>Login</p>
-          </button>
-        </Link>
-        </div>
-        <div class='login_sq'onClick="window.location.href='http://127.0.0.1:8000/login/';">        
-        <Link to = '/org'> 
-          <button class='box'>
-            <img src="../static/Images/organization.png" alt="Logo" width="120" height="120" />
-            <p>Register</p>
-          </button>
-        </Link>
-        </div>
+      <button class='box'>
+        <img src="../static/Images/doctor.png" alt="Logo" width="120" height="120" />
+        <p>Doctor</p>
+        <button onClick="window.location.href='http://127.0.0.1:8000/login/';">Login</button>
+        <button onClick="window.location.href='http://127.0.0.1:8000/DoctorSignup/';">Register</button>
+      </button>
+
     </div>
-</div>
+    <div class='login_sq'>
+      <button class='box'>
+        <img src="../static/Images/hospital.png" alt="Logo" width="120" height="120" />
+        <p>Hospital</p>
+        <button onClick="window.location.href='http://127.0.0.1:8000/login/';">Login</button>
+        <button onClick="window.location.href='http://127.0.0.1:8000/HospitalSignup/';">Register</button>
+      </button>
+    </div>
+    <div class='login_sq'>
+      <button class='box'>
+        <img src="../static/Images/insurance.png" alt="Logo" width="120" height="120" />
+        <p>Insurance Firm</p>
+        <button onClick="window.location.href='http://127.0.0.1:8000/login/';">Login</button>
+        <button onClick="window.location.href='http://127.0.0.1:8000/InsuranceFirmSignup/';">Register</button>
+      </button>
+    </div>
+    <div class='login_sq'>
+      <button class='box'>
+        <img src="../static/Images/pharmacy.png" alt="Logo" width="120" height="120" />
+        <p>Pharmacy</p>
+        <button onClick="window.location.href='http://127.0.0.1:8000/login/';">Login</button>
+        <button onClick="window.location.href='http://127.0.0.1:8000/PharmacySignup/';">Register</button>
+      </button>
+    </div>
+    <div class='login_sq'>
+      <button class='box'>
+        <img src="../static/Images/patient.png" alt="Logo" width="120" height="120" />
+        <p>Patient</p>
+        <button onClick="window.location.href='http://127.0.0.1:8000/login/';">Login</button>
+        <button onClick="window.location.href='http://127.0.0.1:8000/PatientSignup/';">Register</button>
+      </button>
+    </div>
+  </div>
 </body>
+
 </html>
 
 
 
 
-<!-- <form action = "" method = "POST">
-   {% csrf_token %}
-   <label for="username">Your name: </label>
-   <input id="username" type="text" name="username">
-   <label for="password">Your name: </label>
-   <input id="password" type="password" name="password">
-   <label for="type">type: </label>
-   <input id="type" type="text" name="type">
-   
-   <input type="submit" value="OK">
-</form> -->
+{% comment %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" type="text/css" href="../static/CSS/Home.css" />
+
+</head>
+
+<body>
+  <div class='login'>
+    <div class='login_sq'>
+      <button class='box' onClick="window.location.href='http://127.0.0.1:8000/login/';">
+        <img src="../static/Images/user.png" alt="Logo" width="120" height="120" />
+        <p>Login</p>
+      </button>
+      </Link>
+    </div>
+    <div class='login_sq' onClick="window.location.href='http://127.0.0.1:8000/PatientSignup/';">
+      <button class='box'>
+        <img src="../static/Images/organization.png" alt="Logo" width="120" height="120" />
+        <p>Register</p>
+      </button>
+      </Link>
+    </div>
+  </div>
+  </div>
+</body>
+
+</html>
+{% endcomment %}

@@ -7,22 +7,22 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('Authentication', '0003_rename_document_document_doc_and_more'),
+        ('authentication', '0003_rename_document_document_doc_and_more'),
     ]
 
     operations = [
         migrations.CreateModel(
             name='pending_doctor',
             fields=[
-                ('organization_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='Authentication.organization')),
+                ('organization_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='authentication.organization')),
                 ('license_number', models.CharField(max_length=10)),
             ],
-            bases=('Authentication.organization',),
+            bases=('authentication.organization',),
         ),
         migrations.CreateModel(
             name='pending_organization',
             fields=[
-                ('user_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='Authentication.user')),
+                ('user_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='authentication.user')),
                 ('description', models.CharField(max_length=500)),
                 ('image_1', models.ImageField(max_length=254, upload_to=None)),
                 ('image_2', models.ImageField(max_length=254, upload_to=None)),
@@ -30,17 +30,17 @@ class Migration(migrations.Migration):
                 ('image_4', models.ImageField(blank=True, max_length=254, upload_to=None)),
                 ('image_5', models.ImageField(blank=True, max_length=254, upload_to=None)),
             ],
-            bases=('Authentication.user',),
+            bases=('authentication.user',),
         ),
         migrations.CreateModel(
             name='pending_patient',
             fields=[
-                ('user_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='Authentication.user')),
+                ('user_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='authentication.user')),
                 ('aadhar', models.CharField(max_length=20)),
                 ('dob', models.DateField()),
                 ('id_proof', models.FileField(max_length=254, upload_to='Patient_ID')),
             ],
-            bases=('Authentication.user',),
+            bases=('authentication.user',),
         ),
         migrations.AddField(
             model_name='doctor',

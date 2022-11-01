@@ -16,7 +16,7 @@ import os;
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-TEMPLATE_DIR = os.path.join(BASE_DIR, 'Authentication','Templates')
+TEMPLATE_DIR = os.path.join(BASE_DIR, 'authentication','Templates')
 print(TEMPLATE_DIR)
 print(BASE_DIR)
 # Quick-start development settings - unsuitable for production
@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Authentication',
+    'authentication',
+    # 'authentication.apps.AuthenticationConfig', 
 ]
 
 MIDDLEWARE = [
@@ -123,10 +124,20 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 # STATICFILES_DIRS = [TEMPLATE_DIR + "/static"]
-# STATICFILES_DIRS=[os.path.join(BASE_DIR,"Authentication","static")]
+# STATICFILES_DIRS=[os.path.join(BASE_DIR,"authentication","static")]
 # print(STATICFILES_DIRS)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+STRIPE_PRIVATE_KEY='sk_test_51Lz68tSHxsydDRKAaxsbIeIx3l0OIkxGGJRKeTpDVpKotIf32qjmux34ElL4DjccOWOPP5wGhfnf7p7xzg4DM04600PtUtPao4'
+STRIPE_PUBLIC_KEY='pk_test_51Lz68tSHxsydDRKACIZD5nBj1YGRcH38WHQv6pIdjn5FFQy6q0RaoBmzbaDPlz0RoX6zcdCeDs4JsTmANnQYIKJ400JuWpkFy2'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "group29fcswebsite@gmail.com"
+EMAIL_HOST_PASSWORD = "zwdwpigvgxsrvjxo"

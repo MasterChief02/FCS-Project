@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('Authentication', '0002_doctor_document_hospital_insurance_firm_pharmacy_and_more'),
+        ('authentication', '0002_doctor_document_hospital_insurance_firm_pharmacy_and_more'),
     ]
 
     operations = [
@@ -45,6 +45,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='document',
             name='owner',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='Authentication.patient'),
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='authentication.patient'),
         ),
     ]

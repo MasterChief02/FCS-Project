@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='organization',
             fields=[
-                ('user_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='Authentication.user')),
+                ('user_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='authentication.user')),
                 ('name', models.CharField(max_length=100)),
                 ('description', models.CharField(max_length=500)),
                 ('image_1', models.ImageField(max_length=254, upload_to=None)),
@@ -34,16 +34,16 @@ class Migration(migrations.Migration):
                 ('image_4', models.ImageField(blank=True, max_length=254, upload_to=None)),
                 ('image_5', models.ImageField(blank=True, max_length=254, upload_to=None)),
             ],
-            bases=('Authentication.user',),
+            bases=('authentication.user',),
         ),
         migrations.CreateModel(
             name='patient',
             fields=[
-                ('user_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='Authentication.user')),
+                ('user_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='authentication.user')),
                 ('aadhar', models.CharField(max_length=20)),
                 ('mobile_number', models.CharField(max_length=10)),
                 ('dob', models.DateField()),
             ],
-            bases=('Authentication.user',),
+            bases=('authentication.user',),
         ),
     ]

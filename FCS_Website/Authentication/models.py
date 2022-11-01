@@ -3,10 +3,10 @@ from django.db import models
 # Create your models here.
 
 class user (models.Model):
-  username = models.CharField (max_length=50)
+  username = models.CharField (max_length=50,unique=True)
   password = models.CharField (max_length=1024)
   name = models.CharField (max_length=50)
-  email = models.EmailField (max_length=50)
+  email = models.EmailField (max_length=50, unique=True)
   mobile_number=models.CharField(max_length=10)
   is_verified = models.BooleanField (default=False)
   #date_added=models.DateTimeField(auto_now_add=True,null=True)
@@ -46,6 +46,7 @@ class hospital(organization):
     
 class patient (user):
   Type="Patient"
+  
   #mydoctor=models.ForeignKey(doctor,null=True,on_delete=models.SET_NULL)
   #myinsurance_firm=models.ForeignKey(insurance_firm,null=True,on_delete=models.SET_NULL)
   #myhospital=models.ForeignKey(hospital,null=True,on_delete=models.SET_NULL)

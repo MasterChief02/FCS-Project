@@ -7,16 +7,16 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('Authentication', '0001_initial'),
+        ('authentication', '0001_initial'),
     ]
 
     operations = [
         migrations.CreateModel(
             name='doctor',
             fields=[
-                ('organization_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='Authentication.organization')),
+                ('organization_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='authentication.organization')),
             ],
-            bases=('Authentication.organization',),
+            bases=('authentication.organization',),
         ),
         migrations.CreateModel(
             name='Document',
@@ -30,23 +30,23 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='hospital',
             fields=[
-                ('organization_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='Authentication.organization')),
+                ('organization_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='authentication.organization')),
             ],
-            bases=('Authentication.organization',),
+            bases=('authentication.organization',),
         ),
         migrations.CreateModel(
             name='insurance_firm',
             fields=[
-                ('organization_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='Authentication.organization')),
+                ('organization_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='authentication.organization')),
             ],
-            bases=('Authentication.organization',),
+            bases=('authentication.organization',),
         ),
         migrations.CreateModel(
             name='pharmacy',
             fields=[
-                ('organization_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='Authentication.organization')),
+                ('organization_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='authentication.organization')),
             ],
-            bases=('Authentication.organization',),
+            bases=('authentication.organization',),
         ),
         migrations.RemoveField(
             model_name='organization',
@@ -70,16 +70,16 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='patient',
             name='mydoctor',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='Authentication.doctor'),
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='authentication.doctor'),
         ),
         migrations.AddField(
             model_name='patient',
             name='myhospital',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='Authentication.hospital'),
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='authentication.hospital'),
         ),
         migrations.AddField(
             model_name='patient',
             name='myinsurance_firm',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='Authentication.insurance_firm'),
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='authentication.insurance_firm'),
         ),
     ]

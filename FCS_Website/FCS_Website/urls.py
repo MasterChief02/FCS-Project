@@ -15,7 +15,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from Authentication.views import *
+from authentication.views import *
 
 
 urlpatterns = [
@@ -23,7 +23,13 @@ urlpatterns = [
     path('', HomePage.as_view(), name='home'),
     path('login/', LoginPage.as_view(), name='login'),
     path('logout/', LogoutPage.as_view(), name='logout'),
-    path('register/', LoginPage.as_view(), name='register'),
+    # path('register/', LoginPage.as_view(), name='register'),
     path('PatientSignup/', PatientSignup.as_view(), name='PatientSignup'),
     path('DoctorSignup/', DoctorSignup.as_view(), name='DoctorSignup'),
+    path('PharmacySignup/', PharmacySignup.as_view(), name='PatientSignup'),
+    path('HospitalSignup/', HospitalSignup.as_view(), name='DoctorSignup'),
+    path('InsuranceFirmSignup/', InsuranceFirmSignup.as_view(), name='PatientSignup'),
+    path('Payment/',PaymentPage.as_view(), name='Payment'),
+    path('Dashboard/',Dashboard.as_view(), name='Dashboard'),
+    path('OTP/',otp.as_view(), name='otp'),
 ]
