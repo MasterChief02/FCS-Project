@@ -1,7 +1,7 @@
 import random
 from django.shortcuts import render,redirect
 
-from authentication.forms import *
+# from authentication.forms import *
 from authentication.models import *
 from django.views.generic.list import ListView
 from django.contrib import messages
