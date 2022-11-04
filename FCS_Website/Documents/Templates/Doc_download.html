@@ -2,12 +2,18 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" type="text/css" href="../static/CSS/doc_download.css" />
+    <link rel="stylesheet" type="text/css" href="./doc_download.css" />
 </head>
 
 <body>
     <div class="main">
-
+        <div class="column">
+            <label for="docs">Choose document:</label>
+                {% for Document in Documents %}
+                    <a href="{{ Document.file.url }}" download> {{ Document.name }}</a>
+                    <iframe src="{{ Document.file.path }}" height="200" width="300"></iframe>
+                {% endfor %}
+        </div>
     </div>
 </body>
 

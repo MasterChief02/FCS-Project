@@ -3,28 +3,36 @@ from django.contrib.auth.models import User, Group
 from .models import *
 
 class UserAdmin (admin.ModelAdmin):
-  list_display = ("username", "email",)
+  list_display = ("username", "name", "email","mobile_number")
 
 
 
 class PatientAdmin (admin.ModelAdmin):
-  list_display = ("username", "email", "aadhar", "mobile_number", "dob")
+  list_display = ("username", "name", "email","mobile_number")
+
+
+
+class DoctorAdmin (admin.ModelAdmin):
+  list_display = ("username", "name", "email","mobile_number", "license_number")
+
+
+
+class OrganizationImageInline (admin.TabularInline):
+    model = OrganizationImage
+    extra = 3
 
 
 
 class OrganizationAdmin (admin.ModelAdmin):
-  list_display = ("username", "email", "name", "description", "image_1", "image_2", "image_3", "image_4", "image_5")
-
+  inlines = [OrganizationImageInline,]
+  list_display = ("username", "name", "email","mobile_number", "location_state", "location_country", "location_pin_code")
 
 
 class DocumentAdmin (admin.ModelAdmin):
   list_display = ("owner", "title","doc","is_verified")
-admin.site.register (patient, PatientAdmin)
-admin.site.register (organization, OrganizationAdmin)
-admin.site.register (user, UserAdmin)
-admin.site.register (insurance_firm,OrganizationAdmin)
-admin.site.register (doctor,OrganizationAdmin)
-admin.site.register (hospital,OrganizationAdmin)
+admin.site.register (Patient, PatientAdmin)
+admin.site.register (Doctor, DoctorAdmin)
+admin.site.register (Organization, OrganizationAdmin)
 # admin.site.register (document, DocumentAdmin)
 
 admin.site.unregister(User)

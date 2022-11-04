@@ -18,22 +18,27 @@ from Documents.views import *
 
 from authentication.views import *
 
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path ('admin/', admin.site.urls),
-    path('', HomePage.as_view(), name='home'),
-    path('login/', LoginPage.as_view(), name='login'),
-    path('logout/', LogoutPage.as_view(), name='logout'),
-    # path('register/', LoginPage.as_view(), name='register'),
-    path('PatientSignup/', PatientSignup.as_view(), name='PatientSignup'),
-    path('DoctorSignup/', DoctorSignup.as_view(), name='DoctorSignup'),
-    path('PharmacySignup/', PharmacySignup.as_view(), name='PatientSignup'),
-    path('HospitalSignup/', HospitalSignup.as_view(), name='DoctorSignup'),
-    path('InsuranceFirmSignup/', InsuranceFirmSignup.as_view(), name='PatientSignup'),
-    path('Payment/',PaymentPage.as_view(), name='Payment'),
-    path('Dashboard/',Dashboard.as_view(), name='Dashboard'),
-    path('OTP/',otp.as_view(), name='otp'),
-    path('document/add', document_add_view.as_view ()),
-    path('document/share', document_share_view.as_view ())
-    path('document/show_shared', document_show_shared.as_view ())
+    # path('', HomePage.as_view(), name='home'),
+    # path('', LoginPage.as_view(), name='login'),
+    # path('login/', LoginPage.as_view(), name='login'),
+    # path('logout/', LogoutPage.as_view(), name='logout'),
+    # # path('register/', LoginPage.as_view(), name='register'),
+    # path('PatientSignup/', PatientSignup.as_view(), name='PatientSignup'),
+    # path('DoctorSignup/', DoctorSignup.as_view(), name='DoctorSignup'),
+    # path('OrganizationSignup/', OrganizationSignup.as_view(), name='OrganizationSignup'),
+    # path('Dashboard/',Dashboard.as_view(), name='Dashboard'),
+    # path('OTP/',otp.as_view(), name='otp'),
+    # path('document/add', document_add_view.as_view ()),
+    # path('document/share', document_share_view.as_view ()),
+    # path('document/show_shared', document_show_shared.as_view ()),
+    # path('checkout/', home, name='home'),
+    # path('create-checkout-session/', create_checkout_session, name='checkout'),
+    # path('success.html/', success,name='success'),
+    # path('cancel.html/', cancel,name='cancel'),
+    # path('Signup/', Signup.as_view(), name='signup'),
 ]
