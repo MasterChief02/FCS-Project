@@ -145,6 +145,11 @@ class Signup_Doctor (ListView):
     mobile_number = request.POST['mobile_number']
     identity_proof = request.POST['identity_proof']
     license_number = request.POST['license_number']
+    location_address = request.POST['location_address']
+    location_district = request.POST['location_district']
+    location_state = request.POST['location_state']
+    location_country = request.POST['location_country']
+    location_pin_code = request.POST['location_pin_code']
 
     # Check username already taken
     if (get_user (username, "Patient") != None):
@@ -163,12 +168,18 @@ class Signup_Doctor (ListView):
     # Add patient
     try:
       user = Doctor (username=username,
-                      password=password,
-                      name=name,
-                      email=email,
-                      mobile_number=mobile_number,
-                      verification_document=identity_proof,
-                      license_number=license_number,)
+                     password=password,
+                     name=name,
+                     email=email,
+                     mobile_number=mobile_number,
+                     verification_document=identity_proof,
+                     license_number=license_number,
+                     location_address=location_address,
+                     location_district=location_district,
+                     location_state=location_state,
+                     location_country=location_country,
+                     location_pin_code=location_pin_code)
+      print ("Created")
       user.save ()
       attributes = {"title":"Signup Successful",
                     "heading": f"Account created successfully for {name}",

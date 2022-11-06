@@ -32,8 +32,12 @@ class Patient (Custom_User):
 
 class Doctor (Custom_User):
   Type = "Doctor"
-  profile_picture = models.ImageField (upload_to="Data/Profile_Picture", height_field=None, width_field=None, max_length=254)
   license_number = models.CharField (max_length=10)
+  location_address = models.CharField (max_length=50)
+  location_district = models.CharField (max_length=50)
+  location_state = models.CharField (max_length=50)
+  location_country = models.CharField (max_length=50)
+  location_pin_code = models.CharField (max_length=50)
 
   def __str__(self):
     return self.Type + ": " + self.name

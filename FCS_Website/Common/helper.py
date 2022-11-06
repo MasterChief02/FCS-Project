@@ -1,6 +1,11 @@
 from authentication.models import *
 
 
+
+INVALID_USERNAME = "ABBA_JABBA_DABBA"
+INVALID_USER_TYPE = "TYPE"
+
+
 def get_user (username:str, type:str):
   if (type.__eq__("Patient")):
     user = Patient
