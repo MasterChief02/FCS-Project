@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="../static/CSS/login.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/CSS/login_old.css"/>
 </head>
 <body>
     <div class="main">
@@ -33,11 +33,11 @@
                         </div>
                         <div class="row">
                             <label for="repassword">Confirm Password: </label>
-                            <input id="repassword" type="re_password" name="re_password">
+                            <input id="repassword" type="password" name="re_password">
                         </div>
                         <div class="row">
                             <label for="mobile_number">Mobile number: </label>
-                            <input id="mobile_number" type="text" name="mobile_number">
+                            <input id="mobile_number" type="tel" name="mobile_number">
                         </div>
                         <div class="row">
                             <label for="description">Description: </label>
@@ -45,7 +45,11 @@
                         </div>
                         <div class="row">
                             <label for="organization_type">Organization Type: </label>
-                            <input id="organization_type" type="text" name="organization_type">
+                            <select id="organization_type" name="organization_type">
+                                <option value="Hospital">Hospital</option>
+                                <option value="Pharmacy">Pharmacy</option>
+                                <option value="Insurance">Insurance</option>
+                            </select>
                         </div>
                         <div class="row">
                             <label for="location_address">Location Address: </label>
@@ -70,6 +74,10 @@
                         <div class="row">
                             <label for="identity_proof">Identity Proof: </label>
                             <input id="identity_proof" type="file" name="identity_proof" class="files">
+                        </div>
+                        <div class="row">
+                            <label for="images">Images: </label>
+                            <input id="images" type="file" name="images" class="files" multiple>
                         </div>
                         <div class="row2">
                             <input type="submit" value="Login" class="submit">

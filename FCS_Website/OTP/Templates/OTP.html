@@ -5,25 +5,20 @@
 </head>
 <body>
     <div class="main">
-        <div class="container">
-
-            <div class="header">
-            <h1>OTP sent to your email ID</h1>
-            </div>
-
-                    <!-- <input type="text" placeholder="Email..." />
-                    <input type="text" placeholder="Password..."/> -->
-                    <form action="" method = "POST" class="bodys">
-                        {% csrf_token %}
-                        <div class="row">
-                            <label for="otp">Enter OTP</label>
-                            <input id="otp" type="text" name="otp">
-                        </div>
-                        <div class="row2">
-                            <input type="submit" value="Submit" class="submit">
-                        </div>
-                     </form>
-                     </form>
+        <div class="left_container">
+            <form action = "" method = "POST" class="body">
+                {% csrf_token %}
+                <div class="row">
+                    <label for="otp">OTP: </label>
+                    <input id="otp" type="text" name="otp">
+                </div>
+                <a href="/otp">Resend OTP</a>
+                <!-- <input type="submit" value="Resend" class="submit" href="/otp"> -->
+                <input type="submit" value="Login" class="submit">
+            </form>
+        </div>
+        <div class="right_container">
+            <h1>Login</h1>
         </div>
     </div>
 

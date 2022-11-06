@@ -43,6 +43,3 @@ class Show_Doctors (ListView):
                   "title":"Doctors",
                   "heading":"List of all doctors"}
     return render (request, "Common/Templates/Show_Doctors.html", attributes)
-
-
-

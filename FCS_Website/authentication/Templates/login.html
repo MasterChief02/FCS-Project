@@ -5,48 +5,36 @@
 </head>
 <body>
     <div class="main">
-        <div class="container">
-
-            <div class="header">
+        <div class="left_container">
+            <form action = "" method = "POST" class="body">
+                {% csrf_token %}
+                <div class="row">
+                    <label for="username">Username: </label>
+                    <input id="username" type="text" name="username">
+                </div>
+                <div class="row">
+                    <label for="password">Password: </label>
+                    <input id="password" type="password" name="password">
+                </div>
+                <!-- <div class="row">
+                    <label for="type">type: </label>
+                    <input id="type" type="text" name="type">
+                </div> -->
+                <div class="row">
+                    <label for="type">Choose login type:</label>
+                    <select id="type" name="type">
+                        <option value="Patient">Patient</option>
+                        <option value="Doctor">Doctor</option>
+                        <option value="Hospital">Hospital</option>
+                        <option value="Pharmacy">Pharmacy</option>
+                        <option value="Insurance_firm">Insurance firm</option>
+                    </select>
+                </div>
+                <input type="submit" value="Verify" class="submit">
+            </form>
+        </div>
+        <div class="right_container">
             <h1>Login</h1>
-            </div>
-
-                    <!-- <input type="text" placeholder="Email..." />
-                    <input type="text" placeholder="Password..."/> -->
-                    <form action = "" method = "POST" class="bodys" id="login">
-                     {% csrf_token %}
-                        <div class="row">
-                            <label for="username">Username: </label>
-                            <input id="username" type="text" name="username">
-                        </div>
-                        <div class="row">
-                            <label for="password">Password: </label>
-                            <input id="password" type="password" name="password">
-                        </div>
-                        <!-- <div class="row">
-                            <label for="OTP">OTP: </label>
-                            <input id="otp" type="otp" name="otp"> -->
-                        <!-- </div> -->
-                        <!-- <div class="row">
-                           <label for="type">Choose type:</label>
-                           <select id="type" name="type" form="login">
-                           <option label="Patient" value="Patient">Patient</option>
-                           <option label="Doctor" value="Doctor">Doctor</option>
-                           <option label="Admin" label="Admin">Admin</option>
-                           <option label="Pharmacy" value="Pharmacy">Pharmacy</option>
-                           <option label="Hospital" value="Hospital">Hospital</option>
-                           <option label="Insurance" value="Insurance">Insurance</option>
-                           </select>
-                       </div> -->
-                       <div class="row">
-                       <label for="type">type: </label>
-                        <input id="type" type="text" name="type">
-                       </div>
-                        <div class="row2">
-                            <input type="submit" value="Login" class="submit">
-                        </div>
-                     </form>
-                     <a href="/Signup"> Signup </a>
         </div>
     </div>
 

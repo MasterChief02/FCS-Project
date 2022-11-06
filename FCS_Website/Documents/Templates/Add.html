@@ -1,16 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="../static/CSS/add.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/CSS/login.css"/>
 </head>
 <body>
     <div class="main">
-        <form action="" method = "POST" class="screen" id="share_docs">
-            <h1>Upload Documents</h1>
-            <input type="text" id="name" name="name" placeholder="Enter file name">
-            <input type="file" id="myFile" name="filename">
-            <input type="submit" value="Submit" class="submit">
-          </form>
+        <div class="container">
+
+            <div class="header">
+            <h1>Upload Document</h1>
+            </div>
+                    <form action="" method = "POST" class="bodys">
+                        {% csrf_token %}
+                        <div class="row">
+                            <label for="name">Name</label>
+                            <input id="name" type="text" name="name">
+                        </div>
+                        <div class="row">
+                            <label for="file">Document: </label>
+                            <input id="file" type="file" name="file" class="files">
+                        </div>
+                        <div class="row2">
+                            <input type="submit" value="Upload" class="submit">
+                        </div>
+                     </form>
+        </div>
     </div>
+
 </body>
 </html>
+

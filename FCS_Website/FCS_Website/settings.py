@@ -41,9 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'authentication',
-    # 'Documents',
     'Common',
     'Dashboard',
+    'Documents',
     'OTP',
 ]
 

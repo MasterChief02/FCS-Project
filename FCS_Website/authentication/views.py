@@ -201,6 +201,7 @@ class Signup_Organization (ListView):
 
 
   def post (self, request):
+    print (request.POST)
     # Retrieving data
     username = request.POST['username']
     password = hashlib.sha512 (request.POST['password'].encode ()).hexdigest ()
