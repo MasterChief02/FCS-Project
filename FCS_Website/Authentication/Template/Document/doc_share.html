@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="./doc_share.css"/>
+</head>
+<body>
+    <div class="main">
+        <h1 class="title">Share Documents</h1>
+        <div class="container">
+            <form action="" method = "POST" id="share_docs" class="form_container">
+                <!-- {% csrf_token %} -->
+
+                    <div class="column">
+                        <h3>Select Documents:</h3>
+                            {% for Document in Documents %}
+                                <input type="checkbox" label="{{ Document.name }}"  id="{{ Document.name }}">
+                                <label  for="{{ Document.name }}"> Document name</label><br>
+                            {% endfor %}
+                    </div>    
+                    <div class="column">
+                        <h3>Choose Doctors:</h3>
+                        {% for Doctor in Doctors %}
+                            <input type="checkbox" id="{{ Doctor.name }}" name="{{ Doctor.name }}" value="{{ Doctor.name }}">
+                            <label for="{{ Doctor.name }}"> Doctor</label><br>
+                        {% endfor %}
+                    </div>
+                    <div class="column">
+                        <h3>Choose Pharmacy:</h3>
+                        {% for Doctor in Pharmacies %}
+                            <input type="checkbox" id="{{ Doctor.name }}" name="{{ Doctor.name }}" value="{{ Doctor.name }}">
+                            <label for="{{ Doctor.name }}"> Doctor</label><br>
+                        {% endfor %}        
+                    </div>
+                    <div class="column">
+                        <h3>Choose Insurance:</h3>
+                        {% for Doctor in Insurance_Firms %}
+                                    <input type="checkbox" id="{{ Doctor.name }}" name="{{ Doctor.name }}" value="{{ Doctor.name }}">
+                                    <label for="{{ Doctor.name }}"> Doctor</label><br>
+                        {% endfor %}
+                    </div>
+                    <div class="column">
+                        <h3>Choose Hospital:</h3>
+                        {% for Doctor in Hospitals %}
+                            <input type="checkbox" id="{{ Doctor.name }}" name="{{ Doctor.name }}" value="{{ Doctor.name }}">
+                            <label for="{{ Doctor.name }}"> Doctor</label><br>
+                        {% endfor %}
+                        
+                    </div>
+                <!-- <div class="submit2">
+                    <input type="submit" value="Submit" class="submit">
+                </div> -->
+            </form>
+        </div>
+    </div>
+</body>
+</html>

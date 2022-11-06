@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="./login_step2.css"/>
+</head>
+<body>
+    <div class="main">
+        <div class="left_container">
+            <form action = "" method = "POST" class="body">
+                {% csrf_token %}
+                <div class="row">
+                    <label for="otp">OTP: </label>
+                    <input id="otp" type="text" name="otp">
+                </div>
+                <input type="submit" value="Resend" class="submit">
+                <input type="submit" value="Login" class="submit">
+            </form>
+        </div>
+        <div class="right_container">
+            <h1>Login</h1>
+        </div>
+    </div>
+
+</body>
+</html>
+
+
+
+
+<!-- <form action = "" method = "POST">
+   {% csrf_token %}
+   <label for="username">Your name: </label>
+   <input id="username" type="text" name="username">
+   <label for="password">Your name: </label>
+   <input id="password" type="password" name="password">
+   <label for="type">type: </label>
+   <input id="type" type="text" name="type">
+   
+   <input type="submit" value="OK">
+</form> -->
