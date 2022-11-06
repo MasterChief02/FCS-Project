@@ -59,11 +59,11 @@ class Edit_Patient (ListView):
     dob = request.POST['dob']
     try:
       Patient.objects.filter (username=user.username).update (name=name, email=email)
-      attributes = {"title":"Information updated",
+      attributes = {"title":"Information update",
                     "heading": f"Information updated successfully for {name}",
                     "redirect":"/patient/dashboard"}
     except:
-      attributes = {"title":"Information updated",
+      attributes = {"title":"Information update",
                     "heading": f"Information could not be updated for {name}",
                     "redirect":"/patient/edit"}
     return render (request, "Common/Templates/message.html", attributes)

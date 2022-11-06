@@ -2,9 +2,7 @@ from django.db import models
 from django.core.validators import FileExtensionValidator
 from django.contrib.auth.base_user import BaseUserManager
 
-from Documents.models import *
 
-# Create your models here.
 
 class Custom_User (models.Model):
   username = models.CharField (max_length=50,unique=True)

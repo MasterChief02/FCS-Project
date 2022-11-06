@@ -16,10 +16,10 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls.static import static
 
-from Documents.views import *
 from authentication.views import *
 from Common.views import *
 from Dashboard.views import *
+from Documents.views import *
 from OTP.views import *
 
 
@@ -36,9 +36,12 @@ urlpatterns = [
     # OTP
     path ('otp/', OTP.as_view ()),
 
-    #Dashboard
+    # Dashboard
     path ('patient/dashboard', Dashboard_Patient.as_view ()),
     path ('patient/edit', Edit_Patient.as_view ()),
+
+    # Document
+    path ('document/add', Document_Add.as_view ()),
 
     # Common
     path ('list/doctors', Show_Doctors.as_view ())
