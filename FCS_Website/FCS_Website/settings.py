@@ -17,6 +17,10 @@ import os;
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'authentication','Templates')
+print("this is base dir ",BASE_DIR)
+
+ROOT = os.path.join(BASE_DIR, 'Data')
+
 print(TEMPLATE_DIR)
 print(BASE_DIR)
 # Quick-start development settings - unsuitable for production

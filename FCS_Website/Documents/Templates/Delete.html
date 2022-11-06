@@ -1,0 +1,22 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document Delete</title>
+</head>
+<body>
+  <form action = "" method = "POST" class="body">
+    {% csrf_token %}
+    <div class="row">
+        <label for="name">Document Name:</label>
+        <select id="name" name="name">
+            {% for document in documents %}
+              <option value="{{document.name}}">{{document.name}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <input type="submit" value="Verify" class="submit">
+</form>
+</body>
+</html>
