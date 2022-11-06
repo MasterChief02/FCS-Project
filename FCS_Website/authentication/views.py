@@ -1,222 +1,250 @@
-import random
 from django.shortcuts import render,redirect
-
-from authentication.forms import *
-from authentication.models import *
 from django.views.generic.list import ListView
-from django.contrib import messages
-from django.conf import settings
-from django.core.cache import cache
-from django.core.mail import send_mail
-import stripe
-from django.http import JsonResponse,HttpResponse
-from django.views.decorators.csrf import csrf_exempt
-stripe.api_key = settings.STRIPE_PRIVATE_KEY
-YOUR_DOMAIN = 'http://127.0.0.1:8000'
+from django.http import *
+import hashlib
+
+from authentication.models import *
+from Common.helper import *
 
 
 
 class LoginPage (ListView):
-  def get(self,request):
-    if (request.session.get ("authenticated", False) == True):
-      return redirect (f"{request.session['type']}/Dashboard")
+  def get (self,request):
+    redirected_from_otp = (request.session.get ("authenticated", False) == False and
+                           request.session.get ("otp_requested", False) == True and
+                           request.session.get ("otp_result", False) == True)
+    logged_in = request.session.get ("authenticated", False) == True
+
+    if (logged_in or redirected_from_otp):
+      if "otp_requested" in request.session.keys ():
+        del request.session["otp_requested"]
+      if "otp_result" in request.session.keys ():
+        del request.session["otp_result"]
+      if "otp_redirect" in request.session.keys ():
+        del request.session["otp_redirect"]
+
+      request.session["authenticated"] = True
+      return redirect (f"/admin")
+
     else:
       return render (request, "authentication/Templates/login.html")
 
-  def post(self,request):
-    username=request.POST['username']
-    password = request.POST['password']
+
+
+  def post (self,request):
+    username = request.POST['username']
+    password = hashlib.sha512 (request.POST['password'].encode ()).hexdigest ()
     type=request.POST['type']
-    if(type.__eq__("Patient")):
-      user = Patient
-    if(type.__eq__("Doctor")):
-      user = Doctor
-    if(type.__eq__("Organization")):
-      user = Organization
 
-    User= user.objects.filter (username=username)
-    if (len (User) > 0 and User[0].password == password):
-        request.session["authenticated"] = False
-        print (request.session["authenticated"])
-        request.session['user']=User[0].username
-        request.session['type']=type
-        return redirect('otp')
+    user = get_user (username, type)
+    if (user==None):
+      return render (request, "Common/Templates/message.html", {"title":"Login Failed", "heading": "Invalid username, password or type", "redirect":"/login"})
+
+    if (user.password == password):
+      request.session["authenticated"] = False
+      request.session["username"] = user.username
+      request.session["user_type"] = type
+      request.session["otp_requested"] = True
+      request.session["otp_result"] = False
+      request.session["otp_redirect"] = "/login"
+      print ("Redirect")
+      return redirect ('/otp')
     else:
-        request.session["authenticated"] = False
-        print (request.session["authenticated"])
-        messages.warning(request, 'Invalid Username or Password.')
-        return render(request, "authentication/Templates/login.html")
-
-# class PaymentPage(ListView):
-
-#   def get_context_data(self, **kwargs):
-#         context=super().get_context_data(**kwargs)
-#         context['key']=settings.STRIPE_PUBLIC_KEY
-#         return context
-
-#   def get(self,request):
-#     if(request.session['authenticated']==True):
-#           pass
-#       # render(request,"authentication/Templates/Payment.html")
-
-class LogoutPage(ListView):
-  def get(self,request):
-        try:
-            request.session["authenticated"] = False
-            del request.session['username']
-        except:
-            return redirect("/")
-        return render(request, "authentication/Templates/signup.html")
-
-class PatientSignup(ListView):
-  def get(self,request):
-  # return render(request, "FCS_Website/authentication/Templates/login.html", {})
-      return render(request, "authentication/Templates/PatientSignup.html")
-
-  def post(self,request):
-    #user typed in credentials
-    gotusername=request.POST['username']
-    User= user.objects.filter (username=gotusername).exists()
-    if(User):
-      messages.warning(request,'Username already taken')
-      return redirect('signup')
-    email=request.POST['email']
-    name=request.POST['name']
-    password = request.POST['password']
-    repassword = request.POST['repassword']
-    if((password.__eq__(repassword))==False):
-      messages.warning(request,'Enter same password')
-      return redirect('signup')
-
-    Aadhar=request.POST['Aadhar']
-    mobile_number=request.POST['mobile_number']
-    identity_proof=request.POST['identity_proof']
-    dob=request.POST['dob']
-    add_patient = patient(username=gotusername, password=password,email=email,name=name,aadhar=Aadhar,mobile_number=mobile_number,dob=dob,id_proof=identity_proof)
-    add_patient.save()
-    return redirect('login')
-
-class DoctorSignup(ListView):
-  def get(self,request):
-  # return render(request, "FCS_Website/authentication/Templates/login.html", {})
-      return render(request, "authentication/Templates/DoctorSignup.html")
-
-  def post(self,request):
-    #user typed in credentials
-    gotusername=request.POST['username']
-    User= user.objects.filter (username=gotusername).exists()
-    if(User):
-      messages.warning(request,'Username already taken')
-      return redirect('signup')
-    email=request.POST['email']
-    name=request.POST['name']
-    password = request.POST['password']
-    repassword = request.POST['repassword']
-    if((password.__eq__(repassword))==False):
-      messages.warning(request,'Enter same password')
-      return redirect('DoctorSignup')
-
-
-    mobile_number=request.POST['mobile_number']
-    license_number=request.POST['license']
-    User= doctor.objects.filter (license_number=license_number).exists()
-    if(User):
-      messages.warning(request,'license_number already registered')
-      return redirect('DoctorSignup')
-    add_doctor = doctor(username=gotusername, password=password,email=email,name=name,mobile_number=mobile_number,license_number=license_number)
-    add_doctor.save()
-    return redirect('login')
-
-class OrganizationSignup(ListView):
-  def get(self,request):
-      # return render(request, "FCS_Website/authentication/Templates/login.html", {})
-      return render(request, "authentication/Templates/OrganizationSignup.html")
-
-  def post(self,request):
-    #user typed in credentials
-    gotusername=request.POST['username']
-
-    User= user.objects.filter (username=gotusername).exists()
-    if(User):
-      messages.warning(request,'Username already taken')
-      return redirect('signup')
-    email=request.POST['email']
-    name=request.POST['name']
-    password = request.POST['password']
-    repassword = request.POST['repassword']
-    if((password.__eq__(repassword))==False):
-      messages.warning(request,'Enter same password')
-      return redirect('DoctorSignup')
-
-
-    mobile_number=request.POST['mobile_number']
-    description=request.POST['description']
-    Image1=request.POST['Image1']
-    Image2=request.POST['Image2']
-    type=request.POST['type']
-    if(type.__eq__("Pharmacy")):
-      user=pharmacy
-    if(type.__eq__("Insurance_Firm")):
-      user=insurance_firm
-    if(type.__eq__("Hospital")):
-      user=hospital
-
-    add_user = user(username=gotusername, password=password,email=email,name=name,mobile_number=mobile_number,description=description,image_1=Image1,image_2=Image2)
-    add_user.save()
-    return redirect('login')
+      request.session["authenticated"] = False
+      return render (request, "Common/Templates/message.html", {"title":"Login Failed", "heading": "Invalid username, password or type", "redirect":"/login"})
 
 
 
-class Dashboard(ListView):
-  def get(self,request):
-    if (request.session.get ("authenticated", False) == False):
-      return redirect('login')
-    else:
-      type=request.session["type"]
+class LogoutPage (ListView):
+  def get (self, request):
+    if "username" in request.session.keys ():
+      del request.session["username"]
+    if "user_type" in request.session.keys ():
+      del request.session["user_type"]
+    if "authenticated" in request.session.keys ():
+      del request.session["authenticated"]
 
-      return render(request, "authentication/Templates/"+type+".html")
-
-class otp(ListView):
-  def get(self,request):
-    messages.success(request, "Message sent." )
-    if (request.session.get ("user", False) == False):
-      return redirect('login')
-    if (request.session.get ("authenticated", False) == True):
-      return redirect('Dashboard')
-    else:
-      #code for emailing otp
-
-      username=request.session["user"]
-      User=user.objects.filter(username=username)
-      if(cache.get(User[0].email)):
-        messages.warning(request, "OTP already sent")
-        return render(request,'authentication/Templates/OTP.html')
-      otp=random.randint(100000,999999)
-      request.session["otp"] =otp
-      cache.set(User[0].email,otp,timeout=100)
-      send_otp_for_user(otp,User)
-      return render(request, "authentication/Templates/OTP.html")
-  def post(self,request):
-    otp_recieved=request.POST["otp"]
-    if(request.session["otp"].__eq__(otp_recieved)):
-      request.session["authenticated"] =True
-      return redirect('Dashboard')
-    else:
-      return redirect('login')
-
-
-def send_otp_for_user(otp,User):
-
-  recipient_list = [User[0].email]
-
-  subject = "OTP for verifying on Patient Data Management Portal "
-  message=f'Hello {User[0].name}, this is your otp {otp} '
-  email_from= "group29fcswebsite@gmail.com"
-  send_mail(subject,message,email_from,recipient_list)
+    return render (request, "Common/Templates/message.html", {"title":"Logout","heading": "Logout successfully", "redirect":"/login"})
 
 
 
-class Signup(ListView):
-  def get(self,request):
-      # return render(request, "FCS_Website/authentication/Templates/login.html", {})
-      return render(request, "authentication/Templates/Signup.html")
+  def post (self, request):
+    return HttpResponseBadRequest ()
+
+
+
+class Signup_Patient (ListView):
+  def get (self, request):
+    return render (request, "authentication/Templates/Signup_Patient.html")
+
+
+
+  def post (self, request):
+    # Retrieving data
+    username = request.POST['username']
+    password = hashlib.sha512 (request.POST['password'].encode ()).hexdigest ()
+    re_password = hashlib.sha512 (request.POST['re_password'].encode ()).hexdigest ()
+    name = request.POST['name']
+    email = request.POST['email']
+    mobile_number = request.POST['mobile_number']
+    identity_proof = request.POST['identity_proof']
+    dob = request.POST['dob']
+    profile_picture = request.POST['profile_picture']
+
+    # Check username already taken
+    if (get_user (username, "Patient") != None):
+      attributes = {"title":"Signup Failed",
+                    "heading": "Username already taken",
+                    "redirect":"/signup/patient"}
+      return render (request, "Common/Templates/message.html", attributes)
+
+    # Check passwords are not equal
+    if not (password.__eq__ (re_password)):
+      attributes = {"title":"Signup Failed",
+                    "heading": "Passwords do not match",
+                    "redirect":"/signup/patient"}
+      return render (request, "Common/Templates/message.html", attributes)
+
+    # Add patient
+    try:
+      user = Patient (username=username,
+                      password=password,
+                      name=name,
+                      email=email,
+                      mobile_number=mobile_number,
+                      verification_document=identity_proof,
+                      dob=dob,
+                      profile_picture=profile_picture)
+      user.save ()
+      attributes = {"title":"Signup Successful",
+                    "heading": f"Account created successfully for {name}",
+                    "redirect":"/signup/patient"}
+      return render (request, "Common/Templates/message.html", attributes)
+
+    except:
+      attributes = {"title":"Signup Failed",
+                    "heading": "Could not create account due to some invalid entries.",
+                    "redirect":"/signup/patient"}
+      return render (request, "Common/Templates/message.html", attributes)
+
+
+
+class Signup_Doctor (ListView):
+  def get (self, request):
+    return render(request, "authentication/Templates/Signup_Doctor.html")
+
+
+
+  def post (self, request):
+    # Retrieving data
+    username = request.POST['username']
+    password = hashlib.sha512 (request.POST['password'].encode ()).hexdigest ()
+    re_password = hashlib.sha512 (request.POST['re_password'].encode ()).hexdigest ()
+    name = request.POST['name']
+    email = request.POST['email']
+    mobile_number = request.POST['mobile_number']
+    identity_proof = request.POST['identity_proof']
+    license_number = request.POST['license_number']
+
+    # Check username already taken
+    if (get_user (username, "Patient") != None):
+      attributes = {"title":"Signup Failed",
+                    "heading": "Username already taken",
+                    "redirect":"/signup/doctor"}
+      return render (request, "Common/Templates/message.html", attributes)
+
+    # Check passwords are not equal
+    if not (password.__eq__ (re_password)):
+      attributes = {"title":"Signup Failed",
+                    "heading": "Passwords do not match",
+                    "redirect":"/signup/doctor"}
+      return render (request, "Common/Templates/message.html", attributes)
+
+    # Add patient
+    try:
+      user = Doctor (username=username,
+                      password=password,
+                      name=name,
+                      email=email,
+                      mobile_number=mobile_number,
+                      verification_document=identity_proof,
+                      license_number=license_number,)
+      user.save ()
+      attributes = {"title":"Signup Successful",
+                    "heading": f"Account created successfully for {name}",
+                    "redirect":"/signup/doctor"}
+      return render (request, "Common/Templates/message.html", attributes)
+
+    except:
+      attributes = {"title":"Signup Failed",
+                    "heading": "Could not create account due to some invalid entries.",
+                    "redirect":"/signup/doctor"}
+      return render (request, "Common/Templates/message.html", attributes)
+
+
+
+class Signup_Organization (ListView):
+  def get (self, request):
+    return render(request, "authentication/Templates/Signup_Organization.html")
+
+
+
+  def post (self, request):
+    # Retrieving data
+    username = request.POST['username']
+    password = hashlib.sha512 (request.POST['password'].encode ()).hexdigest ()
+    re_password = hashlib.sha512 (request.POST['re_password'].encode ()).hexdigest ()
+    name = request.POST['name']
+    email = request.POST['email']
+    mobile_number = request.POST['mobile_number']
+    identity_proof = request.POST['identity_proof']
+    description = request.POST['description']
+    organization_type = request.POST['organization_type']
+    location_address = request.POST['location_address']
+    location_district = request.POST['location_district']
+    location_state = request.POST['location_state']
+    location_country = request.POST['location_country']
+    location_pin_code = request.POST['location_pin_code']
+
+    # Check username already taken
+    if (get_user (username, "Patient") != None):
+      attributes = {"title":"Signup Failed",
+                    "heading": "Username already taken",
+                    "redirect":"/signup/doctor"}
+      return render (request, "Common/Templates/message.html", attributes)
+
+    # Check passwords are not equal
+    if not (password.__eq__ (re_password)):
+      attributes = {"title":"Signup Failed",
+                    "heading": "Passwords do not match",
+                    "redirect":"/signup/doctor"}
+      return render (request, "Common/Templates/message.html", attributes)
+
+    # Add patient
+    try:
+      user = Organization (username=username,
+                      password=password,
+                      name=name,
+                      email=email,
+                      mobile_number=mobile_number,
+                      verification_document=identity_proof,
+                      description=description,
+                      organization_type=organization_type,
+                      location_address=location_address,
+                      location_district=location_district,
+                      location_state=location_state,
+                      location_country=location_country,
+                      location_pin_code=location_pin_code,)
+      print ("Create")
+      user.save ()
+      print ("Save")
+      attributes = {"title":"Signup Successful",
+                    "heading": f"Account created successfully for {name}",
+                    "redirect":"/signup/doctor"}
+      return render (request, "Common/Templates/message.html", attributes)
+
+    except:
+      attributes = {"title":"Signup Failed",
+                    "heading": "Could not create account due to some invalid entries.",
+                    "redirect":"/signup/doctor"}
+      return render (request, "Common/Templates/message.html", attributes)

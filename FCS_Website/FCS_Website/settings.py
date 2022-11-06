@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'authentication',
     # 'Documents',
+    'Common',
+    'OTP',
 ]
 
 MIDDLEWARE = [

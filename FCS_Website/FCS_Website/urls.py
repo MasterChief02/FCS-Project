@@ -14,18 +14,31 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from Documents.views import *
-
-from authentication.views import *
-
 from django.conf.urls.static import static
+
+from Documents.views import *
+from authentication.views import *
+from OTP.views import *
 
 
 urlpatterns = [
     path ('admin/', admin.site.urls),
+
+    # Authentication
+    path ('login/', LoginPage.as_view ()),
+    path ('logout/', LogoutPage.as_view ()),
+    path ('signup/patient', Signup_Patient.as_view ()),
+    path ('signup/doctor', Signup_Doctor.as_view ()),
+    path ('signup/organization', Signup_Organization.as_view ()),
+
+    # OTP
+    path ('otp/', OTP.as_view ()),
+
+
+
     # path('', HomePage.as_view(), name='home'),
     # path('', LoginPage.as_view(), name='login'),
-    # path('login/', LoginPage.as_view(), name='login'),
+
     # path('logout/', LogoutPage.as_view(), name='logout'),
     # # path('register/', LoginPage.as_view(), name='register'),
     # path('PatientSignup/', PatientSignup.as_view(), name='PatientSignup'),
