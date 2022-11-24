@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="../static/CSS/share.css"/>
+</head>
+<body>
+    <div class="main">
+        <div class="share_docs">
+            <h1>Share Documents</h1>
+            <form action="" method = "POST" id="share_docs">
+                {% csrf_token %}
+                <div class="col1">
+                    <div class="column">
+                        <label for="docs">Choose document:</label>
+                        <select id="doc_name" form="share_docs" name="doc_name">
+                            {% for Document in Documents %}
+                                <option label="{{ Document.name }}"> {{ Document.name }} </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="column">
+                        <label for="type">Choose Doctors:</label>
+                        <select id="type" form="share_docs" name="type">
+                            {% for Doctor in Doctors %}
+                                <option label="Doctor: {{ Doctor.name }}" value="Doctor: {{ Doctor.username }}" > {{ Doctor.name }} </option>
+                            {% endfor %}
+                            {% for Doctor in Pharmacies %}
+                                <option label="Pharmacy: {{ Doctor.name }}" value="Pharmacy: {{ Doctor.username }}"> {{ Doctor.name }} </option>
+                            {% endfor %}
+                            {% for Doctor in Insurance_Firms %}
+                                <option label="Insurance Firm: {{ Doctor.name }}" value="Insurance Firm: {{ Doctor.username }}"> {{ Doctor.name }} </option>
+                            {% endfor %}
+                            {% for Doctor in Hospitals %}
+                                <option label="Hospital: {{ Doctor.name }}" value="Hospital: {{ Doctor.username }}"> {{ Doctor.name }} </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="submit2">
+                    <input type="submit" value="Submit" class="submit">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

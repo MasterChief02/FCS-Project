@@ -41,7 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'authentication',
-    # 'authentication.apps.AuthenticationConfig', 
+    'Common',
+    'Dashboard',
+    'Documents',
+    'OTP',
 ]
 
 MIDDLEWARE = [
@@ -123,9 +126,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATICFILES_DIRS = [TEMPLATE_DIR + "/static"]
-# STATICFILES_DIRS=[os.path.join(BASE_DIR,"authentication","static")]
-# print(STATICFILES_DIRS)
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+    '/var/www/static/',
+]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
