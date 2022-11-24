@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="../static/CSS/login.css"/>
+</head>
+<body>
+    <div class="main">
+        <div class="container">
+
+            <div class="header">
+            <h1>Register</h1>
+            </div>
+
+                    <!-- <input type="text" placeholder="Email..." />
+                    <input type="text" placeholder="Password..."/> -->
+                    <form action="" method = "POST" class="bodys">
+                        {% csrf_token %}
+                        <div class="row">
+                            <label for="username">Username</label>
+                            <input id="username" type="text" name="username">
+                        </div>
+                        <div class="row">
+                            <label for="email">Email</label>
+                            <input id="email" type="email" name="email">
+                        </div>
+                        <div class="row">
+                            <label for="name">Name</label>
+                            <input id="name" type="text" name="name">
+                        </div>
+                        <div class="row">
+                            <label for="password">Create Password: </label>
+                            <input id="password" type="password" name="password">
+                        </div>
+                        <div class="row">
+                            <label for="repassword">Confirm Password: </label>
+                            <input id="repassword" type="repassword" name="repassword">
+                        </div>
+                        <div class="row">
+                            <label for="mobile_number">Mobile number: </label>
+                            <input id="mobile_number" type="text" name="mobile_number">
+                        </div>
+                        <div class="row">
+                            <label for="dob">Date of Birth: </label>
+                            <input id="dob" type="date" name="dob">
+                        </div>
+                        <div class="row">
+                            <label for="Aadhar">Aadhar: </label>
+                            <input id="Aadhar" type="text" name="Aadhar">
+                        </div>
+                        <div class="row">
+                            <label for="identity_proof">Identity Proof: </label>
+                            <input id="identity_proof" type="file" name="identity_proof" class="files">
+                        </div>
+                        <div class="row2">
+                            <input type="submit" value="Login" class="submit">
+                        </div>
+                     </form>
+        </div>
+    </div>
+
+</body>
+</html>
+
