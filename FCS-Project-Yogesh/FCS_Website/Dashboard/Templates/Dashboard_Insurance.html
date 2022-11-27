@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="../static/CSS/pdash.css"/>
+</head>
+<body>
+        <div class="main">
+            <div class="side">
+                <h1>Welcome Insurance ! {{user.name}}</h1>
+                <a href="../../logout" class="btn">
+                    <img src="../static/Images/logout.png" alt="Avatar" width="20px" height="20px"/>
+                    <p>Logout</p>
+                </a>
+                <a href="./edit" class="btn">
+                    <img src="../static/Images/edit.png" alt="Avatar" width="20px" height="20px"/>
+                    <p>Edit Profile</p>
+                </a>
+            </div>
+
+            <div class="right_side">
+                    <div class="colum">
+                        <h3>Browse / Search</h3>
+                        <div class="browse">
+                            <a href="../list/patient" >Browse Patients</a>
+                            <a href="../list/doctors" >Browse Doctors</a>
+                            <a href="../list/organization" >Browse Organizations</a>
+                        </div>
+                        <h3>Transactions / Payments</h3>
+                        <div class="browse">
+                            <a href="#" >Purchase Medicine</a>
+                            <a href="#" >Claim Insurance</a>
+                        </div>
+                        <h3>Documents</h3>
+                        <div class="browse">
+                            <a href="../document/add" >Add Docs</a>
+                            <a href="#" >Show/Delete Docs</a>
+                            <a href="../document/share" >Share Docs</a>
+                        </div>
+                        <h3>More Functionalities</h3>
+                        <a href="#" class="records" >Get Health Records</a>  
+                    </div>
+            </div>
+        </div>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="../static/CSS/doc_share.css">
+</head>
+<body>
+    <div class="main">
+        <h1 class="title">Share Documents</h1>
+        <div class="container">
+            <form action="" method = "POST" id="share_docs" class="abc">
+                {% csrf_token %}
+                <div class="form_container">
+                    <div class="column">
+                        <h3>Upload Documents:</h3>
+                        <input type="file" id="myFile" name="filename">
+                    </div>
+                    <div class="column">
+                        <h3>Choose Patient:</h3>
+                        {% for p in Patient %}
+                            <input type="radio" id="{{ p.username }}" name="Patient" value="{{ p.username }}">
+                            <label for="{{ p.username }}">{{ p.name }}</label><br>
+                        {% endfor %}
+                    </div>
+                </div>
+                <input type="submit" value="Submit" class="submit">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

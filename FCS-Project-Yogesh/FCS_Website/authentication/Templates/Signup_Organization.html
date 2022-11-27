@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="../static/CSS/login_old.css"/>
+</head>
+<body>
+    <div class="main">
+        <div class="container">
+
+            <div class="header">
+            <h1>Register</h1>
+            </div>
+
+                    <!-- <input type="text" placeholder="Email..." />
+                    <input type="text" placeholder="Password..."/> -->
+                    <form action="" method = "POST" class="bodys">
+                        {% csrf_token %}
+                        <div class="row">
+                            <label for="name">Name</label>
+                            <input id="name" type="text" name="name">
+                        </div>
+                        <div class="row">
+                            <label for="username">Username</label>
+                            <input id="username" type="text" name="username">
+                        </div>
+                        <div class="row">
+                            <label for="email">Email</label>
+                            <input id="email" type="email" name="email">
+                        </div>
+                        <div class="row">
+                            <label for="password">Create Password: </label>
+                            <input id="password" type="password" name="password">
+                        </div>
+                        <div class="row">
+                            <label for="repassword">Confirm Password: </label>
+                            <input id="repassword" type="password" name="re_password">
+                        </div>
+                        <div class="row">
+                            <label for="mobile_number">Mobile number: </label>
+                            <input id="mobile_number" type="tel" name="mobile_number">
+                        </div>
+                        <div class="row">
+                            <label for="description">Description: </label>
+                            <input id="description" type="text" name="description">
+                        </div>
+                        <div class="row">
+                            <label for="organization_type">Organization Type: </label>
+                            <select id="organization_type" name="organization_type">
+                                <option value="Hospital">Hospital</option>
+                                <option value="Pharmacy">Pharmacy</option>
+                                <option value="Insurance">Insurance</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <label for="location_address">Location Address: </label>
+                            <input id="location_address" type="text" name="location_address">
+                        </div>
+                        <div class="row">
+                            <label for="location_district">Location District: </label>
+                            <input id="location_district" type="text" name="location_district">
+                        </div>
+                        <div class="row">
+                            <label for="location_state">Location State: </label>
+                            <input id="location_state" type="text" name="location_state">
+                        </div>
+                        <div class="row">
+                            <label for="location_country">Location Country: </label>
+                            <input id="location_country" type="text" name="location_country">
+                        </div>
+                        <div class="row">
+                            <label for="location_pin_code">Location Pin Code: </label>
+                            <input id="location_pin_code" type="text" name="location_pin_code">
+                        </div>
+                        <div class="row">
+                            <label for="identity_proof">Identity Proof: </label>
+                            <input id="identity_proof" type="file" name="identity_proof" class="files">
+                        </div>
+                        <div class="row">
+                            <label for="images">Images: </label>
+                            <input id="images" type="file" name="images" class="files" multiple>
+                        </div>
+                        <div class="row2">
+                            <input type="submit" value="Login" class="submit">
+                        </div>
+                     </form>
+        </div>
+    </div>
+
+</body>
+</html>
+

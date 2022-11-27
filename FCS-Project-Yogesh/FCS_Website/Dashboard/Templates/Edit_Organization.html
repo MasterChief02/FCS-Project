@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="../static/CSS/login.css"/>
+</head>
+<body>
+    <div class="main">
+        <div class="container">
+
+            <div class="header">
+            <h1>Edit Patient</h1>
+            </div>
+
+                    <!-- <input type="text" placeholder="Email..." />
+                    <input type="text" placeholder="Password..."/> -->
+                    <form action="" method = "POST" class="bodys">
+                        {% csrf_token %}
+                        <div class="row">
+                            <label for="name">Name</label>
+                            <input id="name" type="text" name="name" value="{{user.name}}">
+                        </div>
+                        <div class="row">
+                            <label for="email">Email</label>
+                            <input id="email" type="email" name="email" value="{{user.email}}">
+                        </div>
+                        <div class="row">
+                            <label for="mobile_number">Mobile number: </label>
+                            <input id="mobile_number" type="text" name="mobile_number" value="{{user.mobile_number}}">
+                        </div>
+                        <div class="row">
+                            <label for="description">Description: </label>
+                            <input id="description" type="text" name="description" value="{{user.description}}">
+                        </div>
+                        <div class="row">
+                            <label for="Location_address">Location Address </label>
+                            <input id="Location_address" type="text" name="Location_address" value="{{user.location_address}}">
+                        </div>
+                        <div class="row">
+                            <label for="location_district">location_district: </label>
+                            <input id="location_district" type="text" name="location_district" value="{{user.location_district}}">
+                        </div>
+                        <div class="row">
+                            <label for="location_state">location_state: </label>
+                            <input id="location_state" type="text" name="location_state" value="{{user.location_state}}">
+                        </div>
+                        <div class="row">
+                            <label for="location_country">location_country: </label>
+                            <input id="location_country" type="text" name="location_country" value="{{user.location_country }}">
+                        </div>
+                        <div class="row">
+                            <label for="location_pin_code">location_pin_code: </label>
+                            <input id="location_pin_code" type="text" name="location_pin_code" value="{{user.location_pin_code }}">
+                        </div>
+                        <div class="row2">
+                            <input type="submit" value="Edit" class="submit">
+                        </div>
+                     </form>
+        </div>
+    </div>
+
+</body>
+</html>
+

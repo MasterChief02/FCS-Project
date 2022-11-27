@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="../static/CSS/login.css"/>
+</head>
+<body>
+    <div class="main">
+        <div class="left_container">
+            <form action = "" method = "POST" class="body">
+                {% csrf_token %}
+                <div class="row">
+                    <label for="otp">OTP: </label>
+                    <input id="otp" type="text" name="otp">
+                </div>
+                <a href="/otp">Resend OTP</a>
+                <!-- <input type="submit" value="Resend" class="submit" href="/otp"> -->
+                <input type="submit" value="Login" class="submit">
+            </form>
+        </div>
+        <div class="right_container">
+            <h1>Login</h1>
+        </div>
+    </div>
+
+</body>
+</html>
