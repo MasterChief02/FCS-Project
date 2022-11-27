@@ -8,7 +8,7 @@ import datetime
 from cryptography.hazmat import backends
 from cryptography.hazmat.primitives.serialization import pkcs12
 
-from endesive.pdf import cms
+# from endesive.pdf import cms
 
 
 class Document (models.Model):
