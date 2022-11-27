@@ -28,7 +28,7 @@ class Document (models.Model):
 
   def share_with_organization (self, username):
     organization = Organization.objects.filter (username=username, is_verified=True)[0]
-    self.share_with_organization.add (organization)
+    self.shared_with_organization.add (organization)
 
 
   def request_verification (self, username, type):

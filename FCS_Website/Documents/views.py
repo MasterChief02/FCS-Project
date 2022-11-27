@@ -41,46 +41,139 @@ class Document_Add (ListView):
 
 
 
-class document_share_view (ListView):
+class Document_Share (ListView):
   def get (self, request):
-    print (request.session.get ("authenticated", None), request.session.get ("type", None))
-    if (request.session.get ("authenticated", None) == True and request.session.get ("type", None) == "Patient"):
-      user = patient.objects.all ().filter (username=request.session['user'])[0]
-      attributes = {"Documents":Document.objects.filter (owner_patient=user),
-                    "Doctors": doctor.objects.all (),
-                    "Insurance_Firms": insurance_firm.objects.all (),
-                    "Pharmacies": pharmacy.objects.all (),
-                    "Hospitals": hospital.objects.all (),
-                   }
-      return render(request, "Documents/Templates/Share.html", attributes)
-    else:
+    if (request.session.get ("authenticated", False) == False or
+        request.session.get ("user_type", INVALID_USER_TYPE) != "Patient"):
       return HttpResponseForbidden ()
 
+    user = get_user (request.session.get ("username", INVALID_USERNAME), "Patient")
+    if (user == None):
+      request.session["authenticated"] = False
+      return redirect ("/login")
+
+    attributes = {"Documents":Document.objects.filter (owner_patient=user),
+                  "Doctors": Doctor.objects.filter (is_verified=True),
+                  "Insurance_Firms": Organization.objects.filter (is_verified=True, organization_type="Insurance"),
+                  "Pharmacies": Organization.objects.filter (is_verified=True, organization_type="Pharmacy"),
+                  "Hospitals": Organization.objects.filter (is_verified=True, organization_type="Hospital"),}
+    return render (request, "Documents/Templates/Share.html", attributes)
+
   def post (self, request):
-    if (request.session.get ("authenticated", None) == True and request.session.get ("type", None) == "Patient"):
-      user = patient.objects.all ().filter (username=request.session['user'])[0]
-      document = Document.objects.all ().filter (owner_patient=user).filter (name=request.POST["doc_name"])[0]
-      type, username = str (request.POST["type"]).split (":")
-      username = username[1:]
+    if (request.session.get ("authenticated", False) == False or
+        request.session.get ("user_type", INVALID_USER_TYPE) != "Patient"):
+      return HttpResponseForbidden ()
 
-      document.validate ("Yogesh","key")
+    user = get_user (request.session.get ("username", INVALID_USERNAME), "Patient")
+    if (user == None):
+      request.session["authenticated"] = False
+      return redirect ("/login")
 
-      if (type == "Doctor"):
-        print ("Doctor", username)
-        document.share_with_doctor (username)
-      elif (type == "Insurance Firm"):
-        print ("IF", username)
-        document.share_with_insurance_firm (username)
-      elif (type == "Pharmacy"):
-        print ("P", username)
-        document.share_with_pharmacy (username)
-      elif (type == "Hospital"):
-        print ("H", username)
-        document.share_with_hospital (username)
+    document_names = request.POST.getlist ("Document")
+    doctor_names = request.POST.getlist ("Doctor")
+    insurance_names = request.POST.getlist ("Insurance")
+    hospital_name = request.POST.getlist ("Hospital")
+    pharmacy_names = request.POST.getlist ("Pharmacy")
+    try:
+      for name in document_names:
+        document = Document.objects.filter (owner_patient=user, name=name)[0]
+
+        for d_name in doctor_names:
+          document.share_with_doctor (d_name)
+
+        for i_name in insurance_names:
+          print (i_name)
+          document.share_with_organization (i_name)
+
+        for h_name in hospital_name:
+          document.share_with_organization (h_name)
+
+        for p_name in pharmacy_names:
+          document.share_with_organization (p_name)
+
+      attributes = {"title":"Document share",
+                    "heading": f"Document shared successfully",
+                    "redirect":"/login"}
+    except:
+      attributes = {"title":"Document upload",
+                    "heading": f"Document could not be shared",
+                    "redirect":"/document/share"}
+    return render (request, "Common/Templates/message.html", attributes)
+
+
+
+class Document_Show (ListView):
+  def get (self, request):
+    # For patients
+    if (request.session.get ("user_type", INVALID_USER_TYPE) == "Patient"):
+      if (request.session.get ("authenticated", False) == False):
+        return HttpResponseForbidden ()
+
+      user = get_user (request.session.get ("username", INVALID_USERNAME), "Patient")
+      if (user == None):
+        request.session["authenticated"] = False
+        return redirect ("/login")
+
+      documents = Document.objects.filter (owner_patient=user)
+      return render (request, "Documents/Templates/Show_Mine.html", {"documents":documents})
+
+    # For others
+    else:
+      if (request.session.get ("authenticated", False) == False):
+        return HttpResponseForbidden ()
+
+      user = get_user (request.session.get ("username", INVALID_USERNAME),
+                       request.session.get ("user_type", INVALID_USER_TYPE))
+
+      if (user == None):
+        request.session["authenticated"] = False
+        return redirect ("/login")
+
+      if (user.Type == "Doctor"):
+        documents = Document.objects.filter (shared_with_doctors=user)
       else:
-        print ("H", username)
-        return HttpResponseBadRequest ()
-      return render(request, "Documents/Templates/Share_Success.html", {"name":username})
+        documents = Document.objects.filter (shared_with_organization=user)
+      return render (request, "Documents/Templates/Show_Shared.html", {"documents":documents})
+
+
+
+class Document_Delete (ListView):
+  def get (self, request):
+    if (request.session.get ("authenticated", False) == False or
+        request.session.get ("user_type", INVALID_USER_TYPE) != "Patient"):
+      return HttpResponseForbidden ()
+
+    user = get_user (request.session.get ("username", INVALID_USERNAME), "Patient")
+    if (user == None):
+      request.session["authenticated"] = False
+      return redirect ("/login")
+
+    documents = Document.objects.filter (owner_patient=user)
+    return render (request, "Documents/Templates/Delete.html", {"documents":documents})
+
+
+
+  def post (self, request):
+    if (request.session.get ("authenticated", False) == False or
+        request.session.get ("user_type", INVALID_USER_TYPE) != "Patient"):
+      return HttpResponseForbidden ()
+
+    user = get_user (request.session.get ("username", INVALID_USERNAME), "Patient")
+    if (user == None):
+      request.session["authenticated"] = False
+      return redirect ("/login")
+
+    name = request.POST["name"]
+    try:
+      Document.objects.filter (owner_patient=user, name=name).delete ()
+      attributes = {"title":"Document delete",
+                    "heading": f"Document deleted successfully",
+                    "redirect":"/login"}
+    except:
+      attributes = {"title":"Document delete",
+                    "heading": f"Document could not be deleted",
+                    "redirect":"/document/delete"}
+    return render (request, "Common/Templates/message.html", attributes)
 
 
 

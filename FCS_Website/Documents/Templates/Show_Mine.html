@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{{title}}</title>
+  <link rel="stylesheet" type="text/css" href="../static/CSS/dash.css"/>
+</head>
+<body>
+  <h2>{{heading}}</h2>
+  <table>
+    <tr>
+      <th>Document Name</th>
+      <th>Shared With Doctors</th>
+      <th>Shared With Organizations</th>
+    </tr>
+    {% for document in documents %}
+      <tr>
+        <td>{{document.name}}</td>
+        <td>
+          <ul>
+          {% for doctor in document.shared_with_doctors.all %}
+            <li>{{doctor.name}}</li>
+          {% endfor %}
+        </ul>
+        </td>
+        <td>
+          <ul>
+          {% for organization in document.shared_with_organization.all %}
+          <li>{{organization.name}}</li>
+          {% endfor %}
+        </ul>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+</body>

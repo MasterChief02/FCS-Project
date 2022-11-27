@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{{title}}</title>
+  <link rel="stylesheet" type="text/css" href="../static/CSS/dash.css"/>
+</head>
+<body>
+  <h2>{{heading}}</h2>
+  <table>
+    <tr>
+      <th>Document Name</th>
+      <th>Shared By</th>
+    </tr>
+    {% for document in documents %}
+      <tr>
+        <td>{{document.name}}</td>
+        <td>{{document.owner_patient}}</td>
+      </tr>
+    {% endfor %}
+  </table>
+</body>

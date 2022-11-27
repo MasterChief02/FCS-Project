@@ -23,8 +23,25 @@ class LoginPage (ListView):
       if "otp_redirect" in request.session.keys ():
         del request.session["otp_redirect"]
 
+      user = get_user (request.session.get ("username", INVALID_USERNAME),
+                       request.session.get ("user_type", INVALID_USER_TYPE))
+
+      if (user == None):
+        request.session["authenticated"] = False
+        return redirect ("/login")
+
       request.session["authenticated"] = True
-      return redirect (f"/admin")
+      if (request.session.get ("user_type", INVALID_USER_TYPE) == "Patient"):
+        return redirect (f"/patient/dashboard")
+      elif (request.session.get ("user_type", INVALID_USER_TYPE) == "Doctor"):
+        return redirect (f"/doctor/dashboard")
+      elif (request.session.get ("user_type", INVALID_USER_TYPE) == "Organization"):
+        if (user.organization_type == "Hospital"):
+          return redirect (f"/hospital/dashboard")
+        elif (user.organization_type == "Pharmacy"):
+          return redirect (f"/pharmacy/dashboard")
+        elif (user.organization_type == "Insurance"):
+          return redirect (f"/insurance/dashboard")
 
     else:
       return render (request, "authentication/Templates/login.html")
@@ -201,6 +218,7 @@ class Signup_Organization (ListView):
 
 
   def post (self, request):
+    print (request.POST)
     # Retrieving data
     username = request.POST['username']
     password = hashlib.sha512 (request.POST['password'].encode ()).hexdigest ()

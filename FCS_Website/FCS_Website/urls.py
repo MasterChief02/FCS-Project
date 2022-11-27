@@ -15,14 +15,19 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls.static import static
+from django.conf import settings
 
 from authentication.views import *
 from Common.views import *
 from Dashboard.views import *
 from Documents.views import *
 from OTP.views import *
+from FCS_Website.settings import ROOT
+# ROOT = '/FCS_Website/Data/Profile_Picture/'
+# PATH = '/FCS_Website/Data/Profile_Picture/'
 
-
+# ROOT = '/mnt/ntfs/IIITD/3rd Year/FCS/Project/FCS_Website/Documents/Data/Profile_Picture/'
+PATH = '/images/'
 urlpatterns = [
     path ('admin/', admin.site.urls),
 
@@ -38,13 +43,28 @@ urlpatterns = [
 
     # Dashboard
     path ('patient/dashboard', Dashboard_Patient.as_view ()),
+    path ('patient/dashboard', Dashboard_Patient.as_view ()),
+    path ('doctor/dashboard', Dashboard_Doctor.as_view ()),
+    path ('pharmacy/dashboard', Dashboard_Pharmacy.as_view ()),
+    path ('insurance/dashboard', Dashboard_Insurance.as_view ()),
+    path ('hospital/dashboard', Dashboard_Hospital.as_view ()),
     path ('patient/edit', Edit_Patient.as_view ()),
+    path ('doctor/edit', Edit_Doctor.as_view ()),
+    path ('organization/edit', Edit_Organization.as_view ()),
+
+    # Document
+    path ('document/add', Document_Add.as_view ()),
+    path ('document/delete', Document_Delete.as_view ()),
+    path ('document/share', Document_Share.as_view ()),
+    path ('document/show', Document_Show.as_view ()),
 
     # Document
     path ('document/add', Document_Add.as_view ()),
 
     # Common
-    path ('list/doctors', Show_Doctors.as_view ())
+    path ('list/doctors', Show_Doctors.as_view ()),
+    path ('list/organization', Show_Organization.as_view ()),
+    path ('list/patient', Show_Organization.as_view ()),
 
 
 
@@ -66,4 +86,4 @@ urlpatterns = [
     # path('success.html/', success,name='success'),
     # path('cancel.html/', cancel,name='cancel'),
     # path('Signup/', Signup.as_view(), name='signup'),
-]
+]+ static(PATH, document_root=ROOT)
