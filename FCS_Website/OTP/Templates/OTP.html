@@ -1,26 +1,52 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="../static/CSS/login.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/CSS/OTP.css"/>
 </head>
-<body>
+<body >
+    <script>
+        function input(e) {
+            var otp = document.getElementById("otp");
+            otp.value = otp.value + e.value;
+        }
+        function del() {
+            var otp = document.getElementById("otp");
+            otp.value = otp.value.substr(0, otp.value.length - 1);
+        }
+    </script>
     <div class="main">
-        <div class="left_container">
-            <form action = "" method = "POST" class="body">
-                {% csrf_token %}
-                <div class="row">
-                    <label for="otp">OTP: </label>
-                    <input id="otp" type="text" name="otp">
-                </div>
-                <a href="/otp">Resend OTP</a>
-                <!-- <input type="submit" value="Resend" class="submit" href="/otp"> -->
-                <input type="submit" value="Login" class="submit">
-            </form>
-        </div>
-        <div class="right_container">
-            <h1>Login</h1>
-        </div>
+        <form action = "" method = "POST" class="body">
+            {% csrf_token %}
+            <div class="otp_container">
+                <label for="otp">OTP: </label>
+                <input id="otp" type="text" name='otp' readonly/>
+            </div>
+            <div id="VirtualKey" class="keys">
+                <input id="btn1" value="0" type="button" onclick="input(this);" />
+                <input id="btn2" value="1" type="button" onclick="input(this);" />
+                <input id="btn3" value="2" type="button" onclick="input(this);" />
+                <input id="btn4" value="3" type="button" onclick="input(this);" />
+                <input id="btn5" value="4" type="button" onclick="input(this);" />
+                <input id="btn6" value="5" type="button" onclick="input(this);" />
+                <input id="btn7" value="6" type="button" onclick="input(this);" />
+                <input id="btn8" value="7" type="button" onclick="input(this);" />
+                <input id="btn9" value="8" type="button" onclick="input(this);" />
+                <input id="btn0" value="9" type="button" onclick="input(this)" />
+                <input id="btnDel" type="button" value="del" onclick="del();" />
+            </div>
+            <input type="submit" value="Resend" class="submit" href="/otp">
+            <input type="submit" value="Login" class="submit">
+        </form>
     </div>
+<body>
+</html>        <input id="btn5" type="button" onclick="input(4);" />
+        <input id="btn6" type="button" onclick="input(5);" />
+        <br />
+        <input id="btn7" type="button" onclick="input(6);" />
+        <input id="btn8" type="button" onclick="input(7);" />
+        <input id="btn9" type="button" onclick="input(8);" />
+        <br />
+        <input id="btn0" type="button" onclick="input(9)" />
+        <input id="btnDel" type="button" value="Backspace" onclick="del();" />
+    </div>
+<BODY>
 
-</body>
-</html>

@@ -19,20 +19,27 @@ from django.conf import settings
 
 from authentication.views import *
 from Common.views import *
+from Blockchain.views import *
 from Dashboard.views import *
 from Documents.views import *
 from OTP.views import *
 from FCS_Website.settings import ROOT
+from Wallet.views import *
 # ROOT = '/FCS_Website/Data/Profile_Picture/'
 # PATH = '/FCS_Website/Data/Profile_Picture/'
 
 # ROOT = '/mnt/ntfs/IIITD/3rd Year/FCS/Project/FCS_Website/Documents/Data/Profile_Picture/'
 PATH = '/images/'
 urlpatterns = [
+
+    # startup
+    path('', Startup.as_view()),
+
+    # admin
     path ('admin/', admin.site.urls),
 
     # Authentication
-    path ('login/', LoginPage.as_view ()),
+    path ('login/', LoginPage.as_view (), name="login"),
     path ('logout/', LogoutPage.as_view ()),
     path ('signup/patient', Signup_Patient.as_view ()),
     path ('signup/doctor', Signup_Doctor.as_view ()),
@@ -57,30 +64,25 @@ urlpatterns = [
     path ('document/delete', Document_Delete.as_view ()),
     path ('document/share', Document_Share.as_view ()),
     path ('document/show', Document_Show.as_view ()),
+    path ('document/sign', Document_Sign.as_view ()),
+    path ('patient/requestclaim' ,Request_claim.as_view ()),
 
     # Common
     path ('list/doctors', Show_Doctors.as_view ()),
     path ('list/organization', Show_Organization.as_view ()),
-    path ('list/patient', Show_Organization.as_view ()),
+    path('list/doctors/<int:pk>', DoctorDetailView, name='DoctorDetailView'),
+    path('Insurance/<int:pk>', InsuranceView.as_view(), name='Insurance'),
+    path('Insurance/<int:pk>', InsuranceView.as_view(), name='Hospital'),
+    path('Pharmacy/<int:pk>', PharmacyView.as_view(), name='Pharmacy'),
+    path('success/', success,name='success'),
+    path('failure/', failure,name='failure'),
+    path('create-checkout-session/', create_checkout_session, name='checkout'),
+    path('payment/', payment, name='payment'),
+    path('webhook/', stripe_webhook),
 
+    # Blockchain
+    path ('test', Show_Test.as_view ()),
 
+    path("pdf/<int:pk>",viewpdf ,name = 'viewpdf')
 
-    # path('', HomePage.as_view(), name='home'),
-    # path('', LoginPage.as_view(), name='login'),
-
-    # path('logout/', LogoutPage.as_view(), name='logout'),
-    # # path('register/', LoginPage.as_view(), name='register'),
-    # path('PatientSignup/', PatientSignup.as_view(), name='PatientSignup'),
-    # path('DoctorSignup/', DoctorSignup.as_view(), name='DoctorSignup'),
-    # path('OrganizationSignup/', OrganizationSignup.as_view(), name='OrganizationSignup'),
-    # path('Dashboard/',Dashboard.as_view(), name='Dashboard'),
-    # path('OTP/',otp.as_view(), name='otp'),
-    # path('document/add', document_add_view.as_view ()),
-    # path('document/share', document_share_view.as_view ()),
-    # path('document/show_shared', document_show_shared.as_view ()),
-    # path('checkout/', home, name='home'),
-    # path('create-checkout-session/', create_checkout_session, name='checkout'),
-    # path('success.html/', success,name='success'),
-    # path('cancel.html/', cancel,name='cancel'),
-    # path('Signup/', Signup.as_view(), name='signup'),
-]+ static(PATH, document_root=ROOT)
+]

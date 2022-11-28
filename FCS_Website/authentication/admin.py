@@ -15,7 +15,8 @@ class PatientAdmin (admin.ModelAdmin):
 class DoctorAdmin (admin.ModelAdmin):
   list_display = ("username", "name", "email","mobile_number", "license_number")
 
-
+class KeysAdmin (admin.ModelAdmin):
+  list_display = ("user", "pub_key", "priv_key")
 
 class OrganizationImageInline (admin.TabularInline):
     model = OrganizationImage
@@ -30,6 +31,8 @@ class OrganizationAdmin (admin.ModelAdmin):
 
 class DocumentAdmin (admin.ModelAdmin):
   list_display = ("owner", "title","doc","is_verified")
+
+admin.site.register (Custom_User, UserAdmin)
 admin.site.register (Patient, PatientAdmin)
 admin.site.register (Doctor, DoctorAdmin)
 admin.site.register (Organization, OrganizationAdmin)

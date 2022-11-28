@@ -11,23 +11,28 @@
       <th>Document Name</th>
       <th>Shared With Doctors</th>
       <th>Shared With Organizations</th>
+      <th>Valid</th>
     </tr>
     {% for document in documents %}
       <tr>
-        <td>{{document.name}}</td>
+        <td>{{document.0.name}}</td>
+
         <td>
           <ul>
-          {% for doctor in document.shared_with_doctors.all %}
+          {% for doctor in document.0.shared_with_doctors.all %}
             <li>{{doctor.name}}</li>
           {% endfor %}
         </ul>
         </td>
         <td>
           <ul>
-          {% for organization in document.shared_with_organization.all %}
+          {% for organization in document.0.shared_with_organization.all %}
           <li>{{organization.name}}</li>
           {% endfor %}
         </ul>
+        </td>
+        <td>
+          {{document.1}}
         </td>
       </tr>
     {% endfor %}

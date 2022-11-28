@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{{title}}</title>
+  <link rel="stylesheet" type="text/css" href="../static/CSS/browse.css"/>
+</head>
+<body>
+  <div class="main">
+    <table class="bodys2">
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Email</th>
+        <th>Mobile Number</th>
+        <th>Description</th>
+        <th>Type</th>
+        <th>Address</th>
+        <th>Pin Code</th>
+
+      </tr>
+      {% for i in data %}
+      <tr>
+        <td><a href="{{ i.get_absolute_url }}">{{i.name}}</a></td>
+        <td>{{i.organization_type}}</td>
+        <td>{{i.email}}</td>
+        <td>{{i.mobile_number}}</td>
+        <td>{{i.description}}</td>
+        <td>{{i.organization_type}}</td>
+        <td>{{i.location_address}}</td>
+        <td>{{i.location_pin_code}}</td>
+
+      </tr>
+      {% endfor %}
+    </table>
+</div>
+</body>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="../static/CSS/login.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/CSS/Add_docs.css"/>
 </head>
 <body>
     <div class="main">
@@ -10,7 +10,7 @@
             <div class="header">
             <h1>Upload Document</h1>
             </div>
-                    <form action="" method = "POST" class="bodys">
+                    <form action="" method = "POST" class="bodys" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="row">
                             <label for="name">Name</label>

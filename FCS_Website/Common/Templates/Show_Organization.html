@@ -2,64 +2,55 @@
 <html lang="en">
 <head>
   <title>{{title}}</title>
-  <link rel="stylesheet" type="text/css" href="../static/CSS/dash.css"/>
+  <link rel="stylesheet" type="text/css" href="../static/CSS/browse.css"/>
 </head>
 <body>
-  <h2>{{heading}}</h2>
-  <form action = "" method = "POST" class="bodys" id="filter">
-    {% csrf_token %}
-    <div class="row">
-      <h3>Filter</h3>
-    </div>
-    <div class="row">
-      <label for="filter_field">Field: </label>
-      <input id="filter_field" type="text" name="filter_field">
-    </div>
-    <div class="row">
-      <label for="filter_value">Value: </label>
-      <input id="filter_value" type="text" name="filter_value">
-    </div>
-    <div class="row">
-      <label for="filter_type">type: </label>
-      <input id="filter_type" type="text" name="filter_type">
-    </div>
-    <div class="row2">
-      <input type="submit" value="filter" class="submit">
-    </div>
-  </form>
-  <table>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Mobile Number</th>
-      <th>Description</th>
-      <th>Type</th>
-      <th>Address</th>
-      <th>District</th>
-      <th>State</th>
-      <th>Country</th>
-      <th>Pin Code</th>
-      <th>Imagessss</th>
+  <div class="main">
+    <form action = "" method = "POST" class="bodys" id="filter">
+      {% csrf_token %}
+      <h2>Filter {{heading}}</h2>
+      <div class="row">
+        <label for="filter_field">Field: </label>
+        <input id="filter_field" type="text" name="filter_field">
+      </div>
+      <div class="row">
+        <label for="filter_value">Value: </label>
+        <input id="filter_value" type="text" name="filter_value">
+      </div>
+      <div class="row">
+        <label for="filter_type">type: </label>
+        <input id="filter_type" type="text" name="filter_type">
+      </div>
+      <div class="row2">
+        <input type="submit" value="filter" class="submit">
+      </div>
+    </form>
 
-    </tr>
-    {% for i in data %}
-    <tr>
-      <td>{{i.name}}</td>
-      <td>{{i.email}}</td>
-      <td>{{i.mobile_number}}</td>
-      <td>{{i.description}}</td>
-      <td>{{i.organization_type}}</td>
-      <td>{{i.location_address}}</td>
-      <td>{{i.location_district}}</td>
-      <td>{{i.location_state}}</td>
-      <td>{{i.location_country}}</td>
-      <td>{{i.location_pin_code}}</td>
-      <!-- <td><img src="../../{{i.image_1}}"></td>
-      <td>{{i.image_1}}</td> -->
-      <!-- <td><img src="../Data/Profile_Picture/img1.jpeg" height="100px" width="100px"></td> -->
-      <td><img src= "/media/{{i.image}}"/> {{i.image}}</td>
+    <table class="bodys2">
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Email</th>
+        <th>Mobile Number</th>
+        <th>Description</th>
+        <th>Type</th>
+        <th>Address</th>
+        <th>Pin Code</th>
 
-    </tr>
-    {% endfor %}
-  </table>
+      </tr>
+      {% for i in data %}
+      <tr>
+        <td><a href="{{ i.get_absolute_url }}">{{i.name}}</a></td>
+        <td>{{i.organization_type}}</td>
+        <td>{{i.email}}</td>
+        <td>{{i.mobile_number}}</td>
+        <td>{{i.description}}</td>
+        <td>{{i.organization_type}}</td>
+        <td>{{i.location_address}}</td>
+        <td>{{i.location_pin_code}}</td>
+
+      </tr>
+      {% endfor %}
+    </table>
+</div>
 </body>

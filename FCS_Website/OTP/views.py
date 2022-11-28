@@ -17,7 +17,7 @@ class OTP (ListView):
       # Send email to user
       print ("Requested")
       user = get_user (request.session["username"], request.session["user_type"])
-      request.session["otp"] = random.randint(100000,999999)
+      request.session["otp"] = str (random.randint(100000,999999))
       print (request.session["otp"])
       recipient_list = [user.email]
       subject = "OTP for Patient Data Management Portal."
@@ -33,9 +33,12 @@ class OTP (ListView):
 
 
   def post(self,request):
-    if(request.session["otp"].__eq__(request.POST["otp"])):
+    if(request.session["otp"] == (request.POST["otp"])):
+      print(request.session["otp"])
+      print(request.POST["otp"])
       request.session["otp_result"] =True
     else:
+      print("red")
       request.session["otp_result"] =False
     del request.session["otp"]
     return redirect(request.session["otp_redirect"])

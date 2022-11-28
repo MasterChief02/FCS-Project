@@ -17,12 +17,14 @@ import os;
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'authentication','Templates')
-print("this is base dir ",BASE_DIR)
-
 ROOT = os.path.join(BASE_DIR, 'Data')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
-print(TEMPLATE_DIR)
-print(BASE_DIR)
+print("this is base dir ", BASE_DIR)
+print("this is root dir ", ROOT)
+print("this is media dir ", MEDIA_ROOT)
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -46,9 +48,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'authentication',
     'Common',
+    'Blockchain',
     'Dashboard',
     'Documents',
     'OTP',
+    'Wallet',
 ]
 
 MIDDLEWARE = [
@@ -141,8 +145,15 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STRIPE_PRIVATE_KEY='sk_test_51Lz68tSHxsydDRKAaxsbIeIx3l0OIkxGGJRKeTpDVpKotIf32qjmux34ElL4DjccOWOPP5wGhfnf7p7xzg4DM04600PtUtPao4'
-STRIPE_PUBLIC_KEY='pk_test_51Lz68tSHxsydDRKACIZD5nBj1YGRcH38WHQv6pIdjn5FFQy6q0RaoBmzbaDPlz0RoX6zcdCeDs4JsTmANnQYIKJ400JuWpkFy2'
+STRIPE_PRIVATE_KEY='sk_test_51M8OcxSHZ5v0xR17wIDQTcLggS4uUgBesgaXRi0l0z6kzC0LGGjpFoApXP5QOeh9OhHfB1SEUXg8KMTU9stuGnLp00Jw5THYk1'
+STRIPE_ENDPOINT_SECRET='whsec_b5b80595cffdaf9fb3cdaf3c1ba28d3a001d9ba891221e3253aead417e0729bf'
+STRIPE_PUBLIC_KEY='pk_test_51M8OcxSHZ5v0xR17KK2kNcyV5PaPYGb1yutEwxZVsnJcHmk4izRCbCCXYZJb1OYuuDzBCj9XenEDqEhfkbLpqZ6W00VaBGRAYn'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "group29fcswebsite@gmail.com"
+EMAIL_HOST_PASSWORD = "zwdwpigvgxsrvjxo"
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
