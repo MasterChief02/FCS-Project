@@ -5,6 +5,7 @@ import hashlib
 
 from authentication.models import *
 from Common.helper import *
+from Common.crypto import *
 
 
 
@@ -14,6 +15,7 @@ class LoginPage (ListView):
                            request.session.get ("otp_requested", False) == True and
                            request.session.get ("otp_result", False) == True)
     logged_in = request.session.get ("authenticated", False) == True
+    print (request.session.get ("otp_result", "Failed"))
 
     if (logged_in or redirected_from_otp):
       if "otp_requested" in request.session.keys ():
@@ -49,6 +51,7 @@ class LoginPage (ListView):
 
 
   def post (self,request):
+    print ("Origin", request.META.get('HTTP_REFERER'))
     username = request.POST['username']
     password = hashlib.sha512 (request.POST['password'].encode ()).hexdigest ()
     type=request.POST['type']
@@ -94,8 +97,6 @@ class Signup_Patient (ListView):
   def get (self, request):
     return render (request, "authentication/Templates/Signup_Patient.html")
 
-
-
   def post (self, request):
     # Retrieving data
     username = request.POST['username']
@@ -124,6 +125,7 @@ class Signup_Patient (ListView):
 
     # Add patient
     try:
+      private_key , public_key = PKI.create_key_pair ()
       user = Patient (username=username,
                       password=password,
                       name=name,
@@ -131,11 +133,15 @@ class Signup_Patient (ListView):
                       mobile_number=mobile_number,
                       verification_document=identity_proof,
                       dob=dob,
-                      profile_picture=profile_picture)
-      user.save ()
+                      profile_picture=profile_picture,
+                      public_key=public_key,
+                      private_key=private_key)
+      user.save()
+
       attributes = {"title":"Signup Successful",
-                    "heading": f"Account created successfully for {name}",
-                    "redirect":"/signup/patient"}
+                    "heading": f"Account created successfully for {name} with private key: {private_key}",
+                    "redirect":"/login",
+                    "time":20}
       return render (request, "Common/Templates/message.html", attributes)
 
     except:
@@ -184,23 +190,27 @@ class Signup_Doctor (ListView):
 
     # Add patient
     try:
+      private_key , public_key = PKI.create_key_pair ()
       user = Doctor (username=username,
-                     password=password,
-                     name=name,
-                     email=email,
-                     mobile_number=mobile_number,
-                     verification_document=identity_proof,
-                     license_number=license_number,
-                     location_address=location_address,
-                     location_district=location_district,
-                     location_state=location_state,
-                     location_country=location_country,
-                     location_pin_code=location_pin_code)
-      print ("Created")
-      user.save ()
+                      password=password,
+                      name=name,
+                      email=email,
+                      mobile_number=mobile_number,
+                      verification_document=identity_proof,
+                      license_number=license_number,
+                      location_address=location_address,
+                      location_district=location_district,
+                      location_state=location_state,
+                      location_country=location_country,
+                      location_pin_code=location_pin_code,
+                      public_key=public_key,
+                      private_key=private_key)
+
+      user.save()
       attributes = {"title":"Signup Successful",
-                    "heading": f"Account created successfully for {name}",
-                    "redirect":"/signup/doctor"}
+                    "heading": f"Account created successfully for {name} with private key: {private_key}",
+                    "redirect":"/login",
+                    "time":20}
       return render (request, "Common/Templates/message.html", attributes)
 
     except:
@@ -251,6 +261,7 @@ class Signup_Organization (ListView):
 
     # Add patient
     try:
+      private_key , public_key = PKI.create_key_pair ()
       user = Organization (username=username,
                       password=password,
                       name=name,
@@ -263,13 +274,14 @@ class Signup_Organization (ListView):
                       location_district=location_district,
                       location_state=location_state,
                       location_country=location_country,
-                      location_pin_code=location_pin_code,)
-      print ("Create")
-      user.save ()
-      print ("Save")
+                      public_key=public_key,
+                      private_key=private_key)
+
+      user.save()
       attributes = {"title":"Signup Successful",
-                    "heading": f"Account created successfully for {name}",
-                    "redirect":"/signup/doctor"}
+                    "heading": f"Account created successfully for {name} with private key: {private_key}",
+                    "redirect":"/login",
+                    "time":20}
       return render (request, "Common/Templates/message.html", attributes)
 
     except:

@@ -8,76 +8,61 @@
             <div class="side_menu">
                 <div class="side_menu_header">
                     <button>
-                        <h2>Welcome {{user.name}}</h2>
+                        <h2>Welcome Patient {{user.name}}</h2>
                     </button>
                 </div>
                 <div class="side_menu_body">
-                    <a href="#" >Browse Doctors</a>
-                    <a href="#" >Browse Pharmacys</a>
-                    <a href="#" >Browse Hospitals</a>
-                    <a href="#" >Browse Insurance</a>
-                    <a href="#" >Get Health Records</a>
-                    <a href="#" >Purchase Medicine</a>
-                    <a href="#" >Your Documents</a>
+                    <a href="../../list/doctors" >Browse Doctors</a>
+                    <a href="../../list/organization" >Browse Organization</a>
+                    <a href="../document/add" >Add Docs</a>
+                    <a href="../document/delete" >Show/Delete Docs</a>
+                    <a href="../document/share" >Share Docs</a>
+                    <a href="../patient/edit" >Edit Profile</a>
+                    <a href="../patient/requestclaim" >Request Claim</a>
+                    <a href="../patient/edit" >Claim Status</a>
+
                 </div>
                 <div class="side_menu_footer">
                     <a href="../../logout">
                     <img src="../static/Images/logout.png" alt="Avatar"/>
                     <p>logout</p>
                     </a>
-
                 </div>
             </div>
             <div class="main_menu">
-                <div class="main_menu_header">
-                    <input type="text" placeholder="Search.." class="search"/>
-                </div>
-                <div class="share_docs">
-                    <form action="" method = "POST" class="col1">
-                        <div class="column">
-                            <label for="partyb">Choose type:</label>
-                            <select id="partyb">
-                                <option label="Pharmacy">Pharmacy</option>
-                                <option label="Hospital">Hospital</option>
-                                <option label="Insurance">Insurance</option>
-                                <option label="Doctor">Doctor</option>
-                            </select>
-                            <input type="submit" value="Go" class="submit">
-                        </div>
-                    </form>
-                    <form action="" method = "POST" class="col1">
-                        <div class="column">
-                            <label for="partyb">Choose type:</label>
-                            <select id="partyb">
-                                <option label="Pharmacy">Pharmacy</option>
-                                <option label="Hospital">Hospital</option>
-                                <option label="Insurance">Insurance</option>
-                                <option label="Insurance">Doctor</option>
-                            </select>
-                            <input type="submit" value="Login" class="submit">
-                        </div>
-                    </form>
-                    <form action="" method = "POST" class="col1">
-                        <div class="column">
-                            <label for="partyb">Choose type:</label>
-                            <select id="partyb">
-                                <option label="Pharmacy">Pharmacy</option>
-                                <option label="Hospital">Hospital</option>
-                                <option label="Insurance">Insurance</option>
-                                <option label="Insurance">Doctor</option>
-                            </select>
-                            <input type="submit" value="Login" class="submit">
-                        </div>
-                    </form>
-                    <!-- <ul>
-                        {% for car in cars %}
-                            <li>{{ car.model }}</li>
+
+                <h3>Following payments are pending, Complete them to fulfil order</h3>
+
+                <form action="" method = "POST" id="claims" class="abc">
+                    {% csrf_token %}
+                    <div class="CLAIMS">
+                        <table>
+                        <h2><tr>
+                            <td>Select</td>
+                            <td>Claim ID</td>
+                            <td>Firm Name</td>
+                            <td>Amount</td>
+                            <td>Document</td>
+                            <td>Approved?</td>
+                        </tr></h2>
+                        {% for claim in unapproved %}
+
+
+                        <tr>
+                            <td><input type="radio" label="{{ claim.id }}"  id="{{ claim.id}}" value="{{ claim.id }}" name="claim"></td>
+                            <td>{{claim.id}}</td>
+                            <td>{{claim.firm.username}}</td>
+                            <td>{{claim.amount}}</td>
+                            <td>{{claim.document.file}}</td>
+                            <td>{{claim.system_approved}}</td>
+                        </tr>
                         {% endfor %}
-                    </ul> -->
-                </div>
-                <div class="transaction">
-                    transactions
-                </div>
+                        </table>
+
+                    </div>
+                    <input type="submit" value="Validate" class="submit">
+                </form>
+
             </div>
         </div>
 

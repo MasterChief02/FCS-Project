@@ -3,20 +3,38 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="../static/CSS/docs_vd.css"/>
   <title>Document Delete</title>
 </head>
 <body>
-  <form action = "" method = "POST" class="body">
-    {% csrf_token %}
-    <div class="row">
-        <label for="name">Document Name:</label>
-        <select id="name" name="name">
+  <div class="main">
+    <!-- <form action = "" method = "POST" class="container"> -->
+
+      <div class="container">
+          <table class="table">
+            <tr>
+              <th>Document</th>
+              <th>View</th>
+              <th>Download</th>
+              <th>Delete</th>
+            </tr>
             {% for document in documents %}
-              <option value="{{document.name}}">{{document.name}}</option>
+            <tr>
+              <form action = "" method = "POST" class="container">
+                {% csrf_token %}
+                <td>{{document.name}}</td>
+                <td><a href="{{document.file.url}}" target="_blank">View</a></td>
+                <td><a href="{{document.file.url}}" download>Download</a></td>
+                <td>
+                  <button type="submit" name="name" class="button">
+                    Delete
+                  </button>
+                </td>
+              </form>
+            </tr>
             {% endfor %}
-        </select>
-    </div>
-    <input type="submit" value="Verify" class="submit">
-</form>
+          </table>
+      </div>
+  </div>
 </body>
 </html>

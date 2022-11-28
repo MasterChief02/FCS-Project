@@ -27,8 +27,95 @@
                     </a>
 
                 </div>
+                
             </div>
+            <div class="main_menu">
+                <div class="CLAIMS">
+                    <h5>Following Claims have been approved</h5>
+                    <table>
+                    <h2><tr>
+                        
+                        <td>Claim ID</td>
+                        <td>Patient Name</td>
+                        <td>Amount</td>
+                        <td>DOcument</td>
+                        <td>Approved?</td>
+                    </tr></h2>
+                    {% for claim in approved %}
+                     
+                     
+                     <tr>
+                        
+                        <td>{{claim.id}}</td>
+                        <td>{{claim.patient.username}}</td>
+                        <td>{{claim.amount}}</td>
+                        <td>{{claim.document.file}}</td>
+                        <td>{{claim.is_approved}}</td>
+                     </tr>
+                    {% endfor %}
+                    </table>
+                
+                </div>
+                <div class="MEDS">
+                    <h5>Following Orders have been approved but not payed, Please complete payment</h5>
+                    <table>
+                    <h2><tr>
+                        
+                        <td>Claim ID</td>
+                        <td>Patient Name</td>
+                        <td>Prescription</td>
+                        <td> Amount</td>
+                        <td>Approved?</td>
+                    </tr></h2>
+                    {% for claim in incomplete %}
+                     
+                     
+                     <tr>
+                        
+                        <td>{{claim.id}}</td>
+                        <td>{{claim.patient.username}}</td>
+                        <td>{{claim.document.file}}</td>
+                        <td>{{claim.amount}}</td>
+                        <td>{{claim.is_approved}}</td>
+                     </tr>
+                    {% endfor %}
+                    </table>
+                
+                </div>
+                <form action="" method = "POST" id="claims" class="abc">
+                    {% csrf_token %}
+                <div class="form_container">
+                <div class="CLAIMS">
+                    <h1></h1>
+                    <h5>FOllowing Claims are pending approval</h5>
+                    <table>
+                    <h2><tr>
+                        <td>Select</td>
+                        <td>Claim ID</td>
+                        <td>Patient Name</td>
+                        <td>Amount</td>
+                        <td>DOcument</td>
+                        <td>Approved?</td>
+                    </tr></h2>
+                    {% for claim in unapproved %}
+                     
+                     
+                     <tr>
+                        <td><input type="radio" label="{{ claim.id }}"  id="{{ claim.id}}" value="{{ claim.id }}" name="claim"></td>
+                        <td>{{claim.id}}</td>
+                        <td>{{claim.patient.username}}</td>
+                        <td>{{claim.amount}}</td>
+                        <td>{{claim.document.file}}</td>
+                        <td>{{claim.is_approved}}</td>
+                     </tr>
+                    {% endfor %}
+                    </table>
+                
+                </div>
+                <input type="submit" value="Validate" class="submit">
+            </form>
             
+            </div>
         </div>
 
 </body>

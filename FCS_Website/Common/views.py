@@ -3,6 +3,8 @@ from django.views.generic.list import ListView
 from django.http import *
 
 from authentication.models import *
+from Documents.models import Document
+from Wallet.models import *
 from .helper import *
 
 
@@ -45,7 +47,98 @@ class Show_Doctors (ListView):
     return render (request, "Common/Templates/Show_Doctors.html", attributes)
 
 
+def DoctorDetailView(request,pk):
+  return redirect ("/login")
+class InsuranceView(ListView):
+  def get (self, request,pk):
+    # For patients
+    if( Organization.objects.filter (organization_type="Insurance", id=pk).exists()==False):
+      return redirect("/login")
+    if (request.session.get ("user_type", INVALID_USER_TYPE) == "Patient"):
+      if (request.session.get ("authenticated", False) == False):
+        return HttpResponseForbidden ()
 
+      user = get_user (request.session.get ("username", INVALID_USERNAME), "Patient")
+      if (user == None):
+        request.session["authenticated"] = False
+        return redirect ("/login")
+
+      documents = Document.objects.filter (owner_patient=user)
+      return render (request, "Common/Templates/InsuranceInteract.html", {"documents":documents})
+
+  def post(self, request,pk):
+
+    if (request.session.get ("authenticated", False) == False or
+        request.session.get ("user_type", INVALID_USER_TYPE) != "Patient"):
+      return HttpResponseForbidden ()
+
+    user = get_user (request.session.get ("username", INVALID_USERNAME), "Patient")
+    if (user == None):
+      request.session["authenticated"] = False
+      return redirect ("/login")
+    document_name = request.POST.getlist ("Document")
+    document = Document.objects.filter (owner_patient=user, name=document_name[0])[0]
+    print(document)
+    amount=request.POST.getlist ("Amount")
+    patient = Patient.objects.filter(username=user.username)[0]
+
+
+    try:
+       org = Organization.objects.filter(organization_type="Insurance" , id=pk)[0]
+       CLAIM = Insurance_Claims (document=document,firm=org,amount=amount[0],patient=patient,firm_type = "Insurance")
+       CLAIM.save()
+    except:
+      attributes = {"title":"Claim Request Failed",
+                    "heading": "Could not process claim due to some invalid entries.",
+                    "redirect":"/login"}
+      return render (request, "Common/Templates/message.html", attributes)
+    return redirect ("/login")
+
+class PharmacyView(ListView):
+  def get (self, request,pk):
+    # For patients
+    if( Organization.objects.filter (organization_type="Pharmacy", id=pk).exists()==False):
+      return redirect("/login")
+    if (request.session.get ("user_type", INVALID_USER_TYPE) == "Patient"):
+      if (request.session.get ("authenticated", False) == False):
+        return HttpResponseForbidden ()
+
+      user = get_user (request.session.get ("username", INVALID_USERNAME), "Patient")
+      if (user == None):
+        request.session["authenticated"] = False
+        return redirect ("/login")
+
+      documents = Document.objects.filter (owner_patient=user)
+      return render (request, "Common/Templates/PharmacyInteract.html", {"documents":documents})
+
+  def post(self, request,pk):
+
+    if (request.session.get ("authenticated", False) == False or
+        request.session.get ("user_type", INVALID_USER_TYPE) != "Patient"):
+      return HttpResponseForbidden ()
+
+    user = get_user (request.session.get ("username", INVALID_USERNAME), "Patient")
+    if (user == None):
+      request.session["authenticated"] = False
+      return redirect ("/login")
+    document_name = request.POST.getlist ("Document")
+    document = Document.objects.filter (owner_patient=user, name=document_name[0])[0]
+    print(document)
+
+    patient = Patient.objects.filter(username=user.username)[0]
+
+
+    try:
+       org = Organization.objects.filter(organization_type="Pharmacy" , id=pk)[0]
+       CLAIM = Insurance_Claims (document=document,firm=org,patient=patient, firm_type = "Pharmacy")
+       CLAIM.save()
+    except Exception as e:
+      print(e)
+      attributes = {"title":"Claim Request Failed",
+                    "heading": "Could not process claim due to some invalid entries.",
+                    "redirect":"/login"}
+      return render (request, "Common/Templates/message.html", attributes)
+    return redirect ("../../login")
 
 class Show_Organization(ListView):
   def get (self, request):

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{{title}}</title>
+  <link rel="stylesheet" type="text/css" href="../static/CSS/request_claim.css"/>
+</head>
+<body>
+  <div class="main">
+    <h1>{{heading}}</h1>
+    <form action = "" method = "POST" class="bodys" id="filter">
+      {% csrf_token %}
+
+      <div class="column">
+        <h1>Select Document to submit claim:</h1>
+            {% for Document in documents %}
+                <input type="radio" label="{{ Document.name }}"  id="{{ Document.name }}" value="{{ Document.name }}" name="Document">
+                <label  for="{{ Document.name }}"> {{ Document.name }}</label><br>
+            {% endfor %}
+    </div>
+      <div class="row1">
+      <label for="Amount">Amount in Rupees</label>
+      <input id="Amount" type="text" name="Amount">
+      </div>
+      <div class="row2">
+        <input type="submit" value="SUBMIT FOR CLAIM" class="submit">
+      </div>
+    </form>
+  </div>
+</body>
+
