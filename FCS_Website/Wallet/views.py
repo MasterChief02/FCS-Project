@@ -6,38 +6,43 @@ YOUR_DOMAIN="http://127.0.0.1:8000/"
 import stripe
 from django.shortcuts import render,redirect
 from django.conf import settings
+from django.http import *
 
 from django.views.decorators.csrf import csrf_exempt
 
 stripe.api_key = settings.STRIPE_PRIVATE_KEY
 from Wallet.models import Transactions,approve
 from django.http import JsonResponse
+from Common.helper import *
+i
 
 
- 
-@csrf_exempt
+
+
 def create_checkout_session (request):
+    if not (check_origin (request.META.get('HTTP_REFERER'))):
+      return HttpResponseForbidden ()
     pk = request.session['transaction']
     ID = request.session["claimID"]
-    
+
     print(ID)
     if( Transactions.objects.filter(ID=pk).exists()==False):
         attributes = {"title":"Invalid Payment Session",
                         "heading": "Illegal route for payment ",
-                    "redirect":"login"}  
-        return render (request, "Common/Templates/message.html", attributes) 
+                    "redirect":"login"}
+        return render (request, "Common/Templates/message.html", attributes)
     transID = Transactions.objects.get(ID=pk)
     if(transID==None):
         attributes = {"title":"Invalid Payment Session",
                         "heading": "Illegal route for payment ",
-                    "redirect":"login"}  
-        return render (request, "Common/Templates/message.html", attributes) 
-    
-    
+                    "redirect":"login"}
+        return render (request, "Common/Templates/message.html", attributes)
+
+
     payload = transID.Amount
     session = stripe.checkout.Session.create(
     payment_method_types=['card'],
- 
+
     line_items=[{
     'price_data': {
      'currency': 'inr',
@@ -45,48 +50,48 @@ def create_checkout_session (request):
      'name': 'Paying for website',
      },
      'unit_amount':payload*100,
-     
+
      },
     'quantity': 1,
-     
+
      }],
     mode='payment',
-    
+
     metadata = {'transid': pk , 'claimID':ID},
     success_url=YOUR_DOMAIN + "success",
     cancel_url=YOUR_DOMAIN +'failure',
     )
-    
+
     return JsonResponse({'id': session.id})
 def payment(request ):
  pk = request.session['transaction']
  if( Transactions.objects.filter(ID=pk).exists()==False):
         attributes = {"title":"Invalid Payment Session",
                         "heading": "Illegal route for payment ",
-                    "redirect":"login"}  
-        return render (request, "Common/Templates/message.html", attributes) 
-    
+                    "redirect":"login"}
+        return render (request, "Common/Templates/message.html", attributes)
+
  trans = Transactions.objects.get(ID=pk)
  if(trans.Success == True):
     attributes = {"title":"Invalid Payment Session",
                         "heading": "Illegal route for payment ",
-                    "redirect":"login"}  
-    return render (request, "Common/Templates/message.html", attributes) 
-    
+                    "redirect":"login"}
+    return render (request, "Common/Templates/message.html", attributes)
+
  user = request.session["username"]
- 
+
  if(trans.Sender.username != user):
      attributes = {"title":"Invalid Payment Session",
                         "heading": "Illegal route for payment ",
-                    "redirect":"login"}  
-     return render (request, "Common/Templates/message.html", attributes) 
+                    "redirect":"login"}
+     return render (request, "Common/Templates/message.html", attributes)
 
- 
+
  return render(request,'Wallet/Templates/checkout.html' )
 
 
 def success(request):
-   
+
     attributes = {"title":"Payment Successfull",
                     "heading": "Your payment was successfull",
                     "redirect":"/login"}
@@ -119,7 +124,7 @@ def stripe_webhook(request):
 
     # Handle the checkout.session.completed event
     if event['type'] == 'checkout.session.completed':
-       
+
         session = event['data']['object']
         id = session['metadata']['transid']
         claimID = session['metadata']['claimID']
@@ -129,4 +134,4 @@ def stripe_webhook(request):
 
 
     return HttpResponse(status=200)
-    
+

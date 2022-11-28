@@ -19,6 +19,9 @@ class Document_Add (ListView):
       return HttpResponseForbidden ()
 
   def post (self, request):
+    if not (check_origin (request.META.get('HTTP_REFERER'))):
+      return HttpResponseForbidden ()
+
     if (request.session.get ("authenticated", False) == False or
         request.session.get ("user_type", INVALID_USER_TYPE) != "Patient"):
       return HttpResponseForbidden ()
@@ -50,11 +53,7 @@ class Document_Add (ListView):
 class Request_claim(ListView):
   def get (self, request):
     if (request.session.get ("authenticated", False) == True and request.session.get ("user_type", INVALID_USER_TYPE) == "Patient"):
-      organization = Organization.objects.filter (is_verified=True)
-      attributes = {"data": organization,
-                  "title":"Organization",
-                  "heading":"List of all organization"}
-      return render(request, "Documents/Templates/Request_Claim.html", attributes)
+      return render(request, "Documents/Templates/Request_claim.html")
     else:
       return HttpResponseForbidden ()
 
@@ -93,6 +92,9 @@ class Document_Share (ListView):
 
 
   def post (self, request):
+    if not (check_origin (request.META.get('HTTP_REFERER'))):
+      return HttpResponseForbidden ()
+
     if (request.session.get ("authenticated", False) == False):
       return HttpResponseForbidden ()
 
@@ -225,6 +227,9 @@ class Document_Delete (ListView):
 
 
   def post (self, request):
+    if not (check_origin (request.META.get('HTTP_REFERER'))):
+      return HttpResponseForbidden ()
+
     if (request.session.get ("authenticated", False) == False or
         request.session.get ("user_type", INVALID_USER_TYPE) != "Patient"):
       return HttpResponseForbidden ()
@@ -269,6 +274,9 @@ class Document_Sign (ListView):
 
 
   def post (self, request):
+    if not (check_origin (request.META.get('HTTP_REFERER'))):
+      return HttpResponseForbidden ()
+
     if (request.session.get ("authenticated", False) == False or
         request.session.get ("user_type", INVALID_USER_TYPE) != "Patient"):
       return HttpResponseForbidden ()

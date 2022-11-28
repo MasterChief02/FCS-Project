@@ -31,6 +31,11 @@ class Dashboard_Patient (ListView):
 
 
   def post (self, request):
+    if not (check_origin (request.META.get('HTTP_REFERER'))):
+      return HttpResponseForbidden ()
+
+    if not (check_origin (request.META.get('HTTP_REFERER'))):
+      return HttpResponseForbidden ()
 
     if (request.session.get ("authenticated", False) == False or
         request.session.get ("user_type", INVALID_USER_TYPE) != "Patient"):
@@ -80,6 +85,8 @@ class Dashboard_Doctor (ListView):
 
   def post (self, request):
     return HttpResponseBadRequest ()
+
+
 class Dashboard_Pharmacy (ListView):
   def get (self, request):
     if (request.session.get ("authenticated", False) == False or
@@ -106,6 +113,9 @@ class Dashboard_Pharmacy (ListView):
 
 
   def post (self, request):
+    if not (check_origin (request.META.get('HTTP_REFERER'))):
+      return HttpResponseForbidden ()
+
     if (request.session.get ("authenticated", False) == False or
         request.session.get ("user_type", INVALID_USER_TYPE) != "Organization"):
       return HttpResponseForbidden ()
@@ -126,6 +136,8 @@ class Dashboard_Pharmacy (ListView):
     claim = claim[0]
 
     return redirect('login')
+
+
 
 class Dashboard_Insurance (ListView):
   def get (self, request):
@@ -149,6 +161,9 @@ class Dashboard_Insurance (ListView):
     return render (request, "Dashboard/Templates/Dashboard_Insurance.html", attributes)
 
   def post (self, request):
+    if not (check_origin (request.META.get('HTTP_REFERER'))):
+      return HttpResponseForbidden ()
+
     if (request.session.get ("authenticated", False) == False or
         request.session.get ("user_type", INVALID_USER_TYPE) != "Organization"):
       return HttpResponseForbidden ()
@@ -202,6 +217,9 @@ class Dashboard_Hospital (ListView):
 
   def post (self, request):
     return HttpResponseBadRequest ()
+
+
+
 class Edit_Patient (ListView):
   def get (self, request):
     if (request.session.get ("authenticated", False) == False or
@@ -219,6 +237,9 @@ class Edit_Patient (ListView):
 
 
   def post (self, request):
+    if not (check_origin (request.META.get('HTTP_REFERER'))):
+      return HttpResponseForbidden ()
+
     if (request.session.get ("authenticated", False) == False or
       request.session.get ("user_type", INVALID_USER_TYPE) != "Patient"):
       return HttpResponseForbidden ()
@@ -261,6 +282,9 @@ class Edit_Doctor (ListView):
 
 
   def post (self, request):
+    if not (check_origin (request.META.get('HTTP_REFERER'))):
+      return HttpResponseForbidden ()
+
     if (request.session.get ("authenticated", False) == False or
       request.session.get ("user_type", INVALID_USER_TYPE) != "Doctor"):
       return HttpResponseForbidden ()
