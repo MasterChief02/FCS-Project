@@ -5,6 +5,8 @@ from authentication.models import *
 INVALID_USERNAME = "ABBA_JABBA_DABBA"
 INVALID_USER_TYPE = "TYPE"
 
+HOST_ORIGIN = "localhost:8000"
+
 
 def get_user (username:str, type:str):
   if (type.__eq__("Patient")):
@@ -20,3 +22,9 @@ def get_user (username:str, type:str):
   if len (users) > 0:
     return users[0]
   return None
+
+
+def check_origin (origin):
+  if (str (origin).split ("/")[2] == HOST_ORIGIN):
+    return True
+  return False

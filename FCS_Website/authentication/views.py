@@ -51,7 +51,9 @@ class LoginPage (ListView):
 
 
   def post (self,request):
-    print ("Origin", request.META.get('HTTP_REFERER'))
+    if not (check_origin (request.META.get('HTTP_REFERER'))):
+      return HttpResponseForbidden ()
+
     username = request.POST['username']
     password = hashlib.sha512 (request.POST['password'].encode ()).hexdigest ()
     type=request.POST['type']
@@ -98,6 +100,9 @@ class Signup_Patient (ListView):
     return render (request, "authentication/Templates/Signup_Patient.html")
 
   def post (self, request):
+    if not (check_origin (request.META.get('HTTP_REFERER'))):
+      return HttpResponseForbidden ()
+
     # Retrieving data
     username = request.POST['username']
     password = hashlib.sha512 (request.POST['password'].encode ()).hexdigest ()
@@ -159,6 +164,9 @@ class Signup_Doctor (ListView):
 
 
   def post (self, request):
+    if not (check_origin (request.META.get('HTTP_REFERER'))):
+      return HttpResponseForbidden ()
+
     # Retrieving data
     username = request.POST['username']
     password = hashlib.sha512 (request.POST['password'].encode ()).hexdigest ()
@@ -228,7 +236,9 @@ class Signup_Organization (ListView):
 
 
   def post (self, request):
-    print (request.POST)
+    if not (check_origin (request.META.get('HTTP_REFERER'))):
+      return HttpResponseForbidden ()
+
     # Retrieving data
     username = request.POST['username']
     password = hashlib.sha512 (request.POST['password'].encode ()).hexdigest ()

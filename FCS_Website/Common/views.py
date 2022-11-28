@@ -23,6 +23,9 @@ class Show_Doctors (ListView):
 
 
   def post (self, request):
+    if not (check_origin (request.META.get('HTTP_REFERER'))):
+      return HttpResponseForbidden ()
+
     if (request.session.get ("authenticated", False) == False):
       return HttpResponseForbidden ()
 
@@ -49,6 +52,9 @@ class Show_Doctors (ListView):
 
 def DoctorDetailView(request,pk):
   return redirect ("/login")
+
+
+
 class InsuranceView(ListView):
   def get (self, request,pk):
     # For patients
@@ -67,6 +73,8 @@ class InsuranceView(ListView):
       return render (request, "Common/Templates/InsuranceInteract.html", {"documents":documents})
 
   def post(self, request,pk):
+    if not (check_origin (request.META.get('HTTP_REFERER'))):
+      return HttpResponseForbidden ()
 
     if (request.session.get ("authenticated", False) == False or
         request.session.get ("user_type", INVALID_USER_TYPE) != "Patient"):
@@ -94,6 +102,8 @@ class InsuranceView(ListView):
       return render (request, "Common/Templates/message.html", attributes)
     return redirect ("/login")
 
+
+
 class PharmacyView(ListView):
   def get (self, request,pk):
     # For patients
@@ -112,6 +122,8 @@ class PharmacyView(ListView):
       return render (request, "Common/Templates/PharmacyInteract.html", {"documents":documents})
 
   def post(self, request,pk):
+    if not (check_origin (request.META.get('HTTP_REFERER'))):
+      return HttpResponseForbidden ()
 
     if (request.session.get ("authenticated", False) == False or
         request.session.get ("user_type", INVALID_USER_TYPE) != "Patient"):
@@ -140,6 +152,8 @@ class PharmacyView(ListView):
       return render (request, "Common/Templates/message.html", attributes)
     return redirect ("../../login")
 
+
+
 class Show_Organization(ListView):
   def get (self, request):
     if (request.session.get ("authenticated", False) == False):
@@ -154,6 +168,9 @@ class Show_Organization(ListView):
 
 
   def post (self, request):
+    if not (check_origin (request.META.get('HTTP_REFERER'))):
+      return HttpResponseForbidden ()
+
     if (request.session.get ("authenticated", False) == False):
       return HttpResponseForbidden ()
 
