@@ -2,39 +2,49 @@
 <html lang="en">
 <head>
   <title>{{title}}</title>
-  <link rel="stylesheet" type="text/css" href="../static/CSS/dash.css"/>
+  <link rel="stylesheet" type="text/css" href="../static/CSS/docs_show.css"/>
 </head>
 <body>
-  <h2>{{heading}}</h2>
-  <table>
-    <tr>
-      <th>Document Name</th>
-      <th>Shared With Doctors</th>
-      <th>Shared With Organizations</th>
-      <th>Valid</th>
-    </tr>
-    {% for document in documents %}
-      <tr>
-        <td>{{document.0.name}}</td>
-
-        <td>
-          <ul>
-          {% for doctor in document.0.shared_with_doctors.all %}
-            <li>{{doctor.name}}</li>
-          {% endfor %}
-        </ul>
-        </td>
-        <td>
-          <ul>
-          {% for organization in document.0.shared_with_organization.all %}
-          <li>{{organization.name}}</li>
-          {% endfor %}
-        </ul>
-        </td>
-        <td>
-          {{document.1}}
-        </td>
-      </tr>
-    {% endfor %}
-  </table>
+  <div class="main">
+    <h2>List of All docs</h2>
+    <div class="container">
+      <table class="table">
+        <tr>
+          <th>Document Name</th>
+          <th>Shared With Doctors</th>
+          <th>Shared With Organizations</th>
+          <th>Valid</th>
+          <th>Sign</th>
+        </tr>
+        {% for document in documents %}
+          <tr>
+            <td>{{document.0.name}}</td>
+  
+            <td>
+              <ul>
+              {% for doctor in document.0.shared_with_doctors.all %}
+                <li>{{doctor.name}}</li>
+              {% endfor %}
+            </ul>
+            </td>
+            <td>
+              <ul>
+              {% for organization in document.0.shared_with_organization.all %}
+              <li>{{organization.name}}</li>
+              {% endfor %}
+            </ul>
+            </td>
+            <td>
+              {{document.1}}
+            </td>
+            <td>
+              <a href="../../document/sign">sign</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+    
+  </div>
+  
 </body>

@@ -83,8 +83,7 @@ class LogoutPage (ListView):
       del request.session["user_type"]
     if "authenticated" in request.session.keys ():
       del request.session["authenticated"]
-
-    return render (request, "Common/Templates/message.html", {"title":"Logout","heading": "Logout successfully", "redirect":"/login"})
+    return render (request, "Common/Templates/message.html", {"title":"Logout","heading": "Logout successfully", "redirect":"/"})
 
 
 

@@ -50,7 +50,11 @@ class Document_Add (ListView):
 class Request_claim(ListView):
   def get (self, request):
     if (request.session.get ("authenticated", False) == True and request.session.get ("user_type", INVALID_USER_TYPE) == "Patient"):
-      return render(request, "Documents/Templates/Request_Claim.html")
+      organization = Organization.objects.filter (is_verified=True)
+      attributes = {"data": organization,
+                  "title":"Organization",
+                  "heading":"List of all organization"}
+      return render(request, "Documents/Templates/Request_Claim.html", attributes)
     else:
       return HttpResponseForbidden ()
 

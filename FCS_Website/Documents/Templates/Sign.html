@@ -4,24 +4,29 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document Delete</title>
+  <link rel="stylesheet" type="text/css" href="../static/CSS/sign.css"/>
 </head>
 <body>
-  <form action = "" method = "POST" class="body">
-    {% csrf_token %}
-    <div class="row">
-        <label for="name">Document Name:</label>
-        <select id="document_iddocument_id" name="document_id">
-            {% for document in documents %}
-              <option value="{{document.document_id}}">{{document.name}}</option>
-            {% endfor %}
-        </select>
-    </div>
-    <div class="row">
-      <label for="private_key">Private Key</label>
-      <input id="private_key" type="text" name="private_key">
-    </div>
+  <div class="main">
+    <form action = "" method = "POST" class="container">
+      {% csrf_token %}
+      <h1>Sign Document</h1>
+      <div class="row">
+          <label for="name">Document Name:</label>
+          <select id="document_iddocument_id" name="document_id">
+              {% for document in documents %}
+                <option value="{{document.document_id}}">{{document.name}}</option>
+              {% endfor %}
+          </select>
+      </div>
+      <div class="row">
+        <label for="private_key">Private Key</label>
+        <input id="private_key" type="text" name="private_key">
+      </div>
+      </div>
+        <input type="submit" value="Verify" class="submit">
+    </form>
   </div>
-    <input type="submit" value="Verify" class="submit">
-</form>
+  
 </body>
 </html>

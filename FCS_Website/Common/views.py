@@ -46,9 +46,9 @@ class Show_Doctors (ListView):
                   "heading":"List of all doctors"}
     return render (request, "Common/Templates/Show_Doctors.html", attributes)
 
-
 def DoctorDetailView(request,pk):
   return redirect ("/login")
+
 class InsuranceView(ListView):
   def get (self, request,pk):
     # For patients
